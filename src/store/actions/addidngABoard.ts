@@ -1,0 +1,1 @@
+export const ADDING_A_BOARD = "ADDING_A_BOARD";

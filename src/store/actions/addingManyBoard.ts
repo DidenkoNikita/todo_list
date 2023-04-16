@@ -1,0 +1,1 @@
+export const ADDING_MANY_BOARD = "ADDING_MANY_BOARD";

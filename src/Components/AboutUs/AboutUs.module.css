@@ -1,0 +1,17 @@
+.aboutUs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 100px;
+}
+  
+.text {
+  font-size: 35px;
+  color: black;
+  font-family: 'Montserrat';
+}
+  
+.image {
+  width: 250px;
+}

@@ -1,0 +1,1 @@
+export const TASK_NO_COMPLETED = 'TASK_NO_COMPLETED';

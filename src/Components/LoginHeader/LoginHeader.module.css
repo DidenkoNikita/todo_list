@@ -1,0 +1,19 @@
+.header {
+  width: 101vw;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  background-color: black;
+  box-shadow: 0 2px 0 0 white;
+}
+  
+.headerArea {
+  display: flex;
+  width: 50vw;
+  justify-content: space-evenly;
+}
+  
+.logo {
+  width: 100px;
+  margin-left: 30px;
+}

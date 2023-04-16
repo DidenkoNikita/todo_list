@@ -1,0 +1,65 @@
+.task {
+  color: black;
+  border: 1px solid white;
+  border-radius: 10px;
+  padding: 5px;
+  padding-left: 5px;
+  margin-bottom: 8px;
+  width: 240px;
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  margin-left: -15px;
+  list-style-type: disc;
+  background-color: rgb(98, 205, 255);
+}
+
+.task:last-child {
+  margin-bottom: 0;
+}
+
+.checkBox {
+  margin-top: 5px;
+  margin-right: 10px;
+  border-radius: 35px;
+  cursor: pointer;
+}
+
+.title {
+  width: 90%;
+  align-self: center;
+}
+
+.delete {
+  background-color: transparent;
+  border: 2px solid blue;
+  border-radius: 35px;
+  color: blue;
+  justify-self: flex-end;
+  padding-top: 2px;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.sequenceNumber {
+  margin-right: 10px;
+}
+
+.done {
+  color: rgb(76, 141, 171);
+  width: 90%;
+  display: flex;
+  align-items: center;
+}
+
+.notCompleted {
+  display: flex;
+  width: 90%;
+  align-items: center;
+}
+
+.taskArea {
+  width: 300px;
+  min-height: 0px;
+  margin-top: -20px;
+}

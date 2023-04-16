@@ -1,0 +1,51 @@
+.area{
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.board {
+  border: none;
+  width: 305px;
+  min-height: 125px;
+  background-color: rgba(167, 189, 255, 0.096);
+  border: 2px solid rgba(153, 163, 255, 0.1);
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.boardName {
+  color: black;
+  align-self: center;
+  margin-top: 10px;
+  margin-bottom: 35px;
+  font-family: 'Montserrat';
+}
+
+.taskArea {
+  width: 300px;
+  height: 300px;
+}
+
+.deleted {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+
+.headerArea {
+  display: flex;
+  align-self: center; 
+}
+
+.deletedButton {
+  background-color: transparent;
+  border: none;
+  margin-top: 8px;
+  margin-left: 8px;
+  width: 25px;
+  height: 25px;
+  padding: 0;
+}

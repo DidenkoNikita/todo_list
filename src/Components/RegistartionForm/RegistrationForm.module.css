@@ -1,0 +1,20 @@
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 15% auto;
+  flex-direction: column;
+}
+
+.input {
+  margin-bottom: 10px;
+}
+
+.componentButton {
+  margin-bottom: 10px
+}
+
+.componentLink {
+  color: white;
+  text-decoration: none;
+}
