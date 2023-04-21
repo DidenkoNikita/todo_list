@@ -1,1 +1,1 @@
-export const REMOVE_BOARD = "REMOVE_BOARD";
+export const REMOVE_BOARD: string = "REMOVE_BOARD";

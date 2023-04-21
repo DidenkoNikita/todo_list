@@ -1,6 +1,6 @@
 import { TASK_NO_COMPLETED } from "../actions/taskNoCompleted";
 
-export const taskNoCompleted = (idT: number, completed: boolean, titleT: string, id: number) => ({
+export const taskNoCompleted = (id: number, completed: boolean, title: string, board_id: number) => ({
   type: TASK_NO_COMPLETED,
-  payload: {idT, completed, titleT, id}
+  payload: {id, completed, title, board_id}
 });

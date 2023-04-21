@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
-import css from './RegistrationForm.module.css';
 import { profileUser } from "../../store/asyncActions/profileUser";
 import { signUpUser } from "../../store/asyncActions/signUpUser";
 import { Button, TextField } from "@mui/material";
 
-export const RegistrationForm = () => {
-  const [login, setLogin] = useState('')
-  const [password, setPassword] = useState('')
+import css from './RegistrationForm.module.css';
+
+export const RegistrationForm = (): JSX.Element => {
+  const [login, setLogin] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
    return (
     <div className={css.form}>
       <TextField 
@@ -19,6 +19,9 @@ export const RegistrationForm = () => {
         size="small"
         onChange={e => setLogin(e.target.value)}
         className={css.input}
+        sx={{
+          marginBottom: '15px',
+        }}
       />
       <TextField 
         type="password"
@@ -28,11 +31,16 @@ export const RegistrationForm = () => {
         size="small"
         onChange={e => setPassword(e.target.value)} 
         className={css.input}
+        sx={{
+          marginBottom: '10px',
+        }}
       />
       <Button 
         variant="contained" 
         size="small"
-        className={css.componentButton}
+        sx={{
+          marginBottom: '10px',
+        }}
         onClick={profileUser(login, password)}
       >
         <Link 
@@ -45,7 +53,7 @@ export const RegistrationForm = () => {
       <Button 
         variant="contained" 
         size="small"
-        onClick={signUpUser(login, password)}
+        onClick={(e) => signUpUser(login, password)}
       >
         <Link 
           to='/home' 
@@ -54,7 +62,6 @@ export const RegistrationForm = () => {
           Регистрация
         </Link>
       </Button>
-
     </div>
   );
 };

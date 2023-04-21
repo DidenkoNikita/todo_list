@@ -1,1 +1,1 @@
-export const REMOVE_TASK = "REMOVE_TASK";
+export const REMOVE_TASK: string = "REMOVE_TASK";

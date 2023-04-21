@@ -13,30 +13,27 @@ import { asyncCompletedTasks } from './asyncActions/asyncCompletedTasks';
 
 export const store = createStore(reducer, initialState, applyMiddleware(thunk));
 
-export const addBoard = () => { 
+export const addBoard = (): void => { 
   store.dispatch(recordingBoardDataOnServer());
 }
 
-export const removeBoard = (id: number) => {
-  store.dispatch(removeDataBoards(id));
-  console.log('remove');
+export const removeBoard = (idBoard: number): void => {
+  store.dispatch(removeDataBoards(idBoard));
 }
 
-export const addTask = (id: number) => {
-  store.dispatch(addingTasks(id));
+export const addTask = (idBoard: number): void => {
+  store.dispatch(addingTasks(idBoard));
 }
 
-export const addManyBoards = () => {
+export const addManyBoards = (): void => {
   store.dispatch(fetchTodos());
   store.dispatch(fetchTasks());
 }
 
-export const removeTask = (idT: number) => {
-  store.dispatch(removeTasks(idT));
-  console.log('remove tasks');
+export const removeTask = (id: number): void => {
+  store.dispatch(removeTasks(id));
 }
 
-export const completedTask = (idT: number, completed: boolean, titleT: string, id: number) => {
-  store.dispatch(asyncCompletedTasks(idT, completed, titleT, id));
-  console.log('completed::idT::', idT, completed, titleT, id);
+export const completedTask = (id: number, completed: boolean, title: string, board_id: number): void => {
+  store.dispatch(asyncCompletedTasks(id, completed, title, board_id));
 }

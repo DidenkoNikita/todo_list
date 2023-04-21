@@ -1,6 +1,6 @@
 import { REMOVE_BOARD } from "../actions/removeBoard";
 
-export const RemoveBoard = (id: number) => ({
+export const RemoveBoard = (idBoard: number) => ({
   type: REMOVE_BOARD,
-  payload: {id}
+  payload: {idBoard}
 });

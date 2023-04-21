@@ -1,24 +1,24 @@
-import { Route, Routes } from "react-router-dom";
 import { Header } from "../Header/Header";
 import { AboutUs } from "../AboutUs/AboutUs";
 import { OurProjects } from "../OurProjects/OurProjects";
 import { TodoList } from "../TodoList/TodoList";
+import { Route, Routes } from "react-router-dom";
 
-export const Profile = () => {
+export const Profile = (): JSX.Element => {
   return (
     <div>
       <Header />
         <Routes>
           <Route 
-            path='/home/toDoList' 
+            path='/toDoList' 
             element={<TodoList />} 
           />
           <Route 
-            path='/home/aboutUs' 
+            path='/aboutUs' 
             element={<AboutUs />} 
           />
           <Route 
-            path='/home/ourProjects' 
+            path='/ourProjects' 
             element={<OurProjects />} 
           />
         </Routes> 

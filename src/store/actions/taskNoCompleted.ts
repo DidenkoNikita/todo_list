@@ -1,1 +1,1 @@
-export const TASK_NO_COMPLETED = 'TASK_NO_COMPLETED';
+export const TASK_NO_COMPLETED: string = 'TASK_NO_COMPLETED';

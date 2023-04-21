@@ -1,1 +1,1 @@
-export const ADDING_MANY_TASK = "ADDING_MANY_TASK";
+export const ADDING_MANY_TASK: string = "ADDING_MANY_TASK";

@@ -1,1 +1,1 @@
-export const ADDING_A_TASK = "ADDING_A_TASK";
+export const ADDING_A_TASK: string = "ADDING_A_TASK";

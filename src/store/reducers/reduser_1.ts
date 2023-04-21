@@ -35,17 +35,16 @@ function reducer(state: any, action: any) {
         case REMOVE_BOARD:   
           return {
             ...state,
-            boards: [...state.boards.filter((board: any) => board.id !== action.payload.id)]
+            boards: [...state.boards.filter((board: any) => board.idBoard !== action.payload.idBoard)]
           };
 
         case REMOVE_TASK: 
           return {
             ...state,
-            tasks: [...state.tasks.filter((task: any) => task.idT !== action.payload.idT)]
+            tasks: [...state.tasks.filter((task: any) => task.task_id !== action.payload.task_id)]
           }
 
         case TASK_NO_COMPLETED: {
-          console.log('action::',action.payload)
           return {
             ...state,
             tasks: [state.tasks, action.payload]

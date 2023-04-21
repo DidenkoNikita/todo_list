@@ -1,1 +1,1 @@
-export const ADDING_MANY_BOARD = "ADDING_MANY_BOARD";
+export const ADDING_MANY_BOARD: string = "ADDING_MANY_BOARD";

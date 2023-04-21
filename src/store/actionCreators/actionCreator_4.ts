@@ -1,6 +1,6 @@
 import { ADDING_MANY_TASK } from "../actions/addingManyTask";
 
-export const AddingManyTask = (idT: number, completed: boolean, titleT: string, id: number) => ({
+export const AddingManyTask = (id: number, completed: boolean, title: string, board_id: number) => ({
   type: ADDING_MANY_TASK,
-  payload: {idT, completed, titleT, id}
+  payload: {id, completed, title, board_id}
 });

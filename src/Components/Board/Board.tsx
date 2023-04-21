@@ -1,36 +1,55 @@
 import css from './Board.module.css';
 import { addTask, removeBoard } from '../../store/store';
-import { Button } from '../Button/Button';
 import { Task } from '../Task/Task';
+import { Props } from '../BoardAddArea/BoardAddArea';
+import { Button } from '@mui/material';
+import { Delete } from '@mui/icons-material';
 
-export const BoardsArea = (filter: any) => {
-    let key = 1;
-    if(!filter) return null
+interface Data {
+    idBoard: number,
+    title: string
+}
+
+export const BoardsArea = ({filter}: Props): JSX.Element | null => {    
+    if (!filter) {
+        return null;
+    }
     return (
         <div className={css.area}>
-            {filter.map((id: number, title: string) => { 
+            {filter.map(({idBoard, title}: Data) => { 
+                console.log(idBoard, title);
                 return (
-                    <div className={css.board} key={key++}>
+                    <div className={css.board} key={idBoard}>
                         <div className={css.headerArea}>
                             <span className={css.boardName}>
                                 {title}
                             </span>
-                            <button 
+                            <button
                                 className={css.deletedButton}
-                                onClick={() => {removeBoard(id)}}
-                                >
-                                <img
-                                    src='https://cdn-icons-png.flaticon.com/512/8345/8345018.png' 
-                                    className={css.deleted}
-                                    alt='-'
-                                    />
+                                onClick={() => {removeBoard(idBoard)}}
+                            >
+                                <Delete 
+                                    fontSize="small"
+                                    sx={{
+                                        alignSelf: 'center',
+                                        color: '#1976d2'
+                                    }}
+                                />
                             </button>
                         </div>
-                        <Task id={id}/>
+                        <Task idBoard={idBoard} />
                         <Button 
-                            text='Добавить задачу' 
-                            onClick={() => {addTask(id)}}
-                        />
+                            variant="contained" 
+                            size="small"
+                            onClick={() => {addTask(idBoard)}}
+                            sx={{
+                                marginBottom: '10px',
+                                maxWidth: '150px',
+                                alignSelf: 'center'
+                              }}
+                        >
+                            Добавить задачу
+                        </Button>
                     </div>
                 )
             })}

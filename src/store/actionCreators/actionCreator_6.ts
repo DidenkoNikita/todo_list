@@ -1,6 +1,6 @@
 import { REMOVE_TASK } from "../actions/removeTasks";
 
-export const RemoveTask = (idT: number) => ({
+export const RemoveTask = (task_id: number) => ({
   type: REMOVE_TASK,
-  payload: {idT}
+  payload: {task_id}
 });

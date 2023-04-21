@@ -1,14 +1,20 @@
 import { useSelector } from "react-redux";
 import { addBoard } from "../../store/store";
+import { FilterBoard } from "../FilterBoard/FilterBoard";
+import { BoardAddArea, Filter } from "../BoardAddArea/BoardAddArea";
+import { useState } from "react";
+import { Button } from "@mui/material";
 
 import css from './TodoList.module.css';
-import { FilterTasks } from "../FilterTasks/FilterTasks";
-import { BoardAddArea } from "../BoardAddArea/BoardAddArea";
-import { useState } from "react";
-import { Button } from "../Button/Button";
 
-export const TodoList = () => {
-    let boards = useSelector((state: any) => state.boards);
+interface IBoard {
+    idBoard: number,
+    title: string,
+    tasks: []
+}
+
+export const TodoList = (): JSX.Element => {
+    let boards: IBoard[] = useSelector((state: any) => state.boards);
     const [ search, setSearch ] = useState('');
     const [query, setQuery ] = useState('');
 
@@ -18,16 +24,23 @@ export const TodoList = () => {
         setQuery(form.search.value)
     }
 
-    let filter: [number, string] = boards.filter((board: any) => {
+    let filter: Filter[] = boards.filter((board: IBoard) => {
         return board.title.toLowerCase().includes(query.toLocaleLowerCase())
     })
 
     return (
         <div className={css.region}>
-            <Button 
+            <Button
+                variant="contained" 
+                size="small"
+                sx={{
+                  marginTop: '10px',
+                }} 
                 onClick={() => addBoard()}
-            />
-            <FilterTasks 
+            >
+                Добавить доску
+            </Button>
+            <FilterBoard 
                 search={search} 
                 setSearch={setSearch} 
                 handleSubmit={handleSubmit} 

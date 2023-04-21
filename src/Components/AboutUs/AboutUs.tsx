@@ -1,6 +1,6 @@
 import css from './AboutUs.module.css';
 
-export const AboutUs = () => {
+export const AboutUs = (): JSX.Element => {
   return (
     <div className={css.aboutUs}>
         <img 
