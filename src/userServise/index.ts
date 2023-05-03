@@ -1,5 +1,7 @@
-import localforage from "localforage";
+import { asyncLogout } from "../store/asyncActions/asyncLogout";
 
 export const logout = (): void => {
-  localforage.clear();
+  localStorage.clear();
+  window.location.assign('/');
+  asyncLogout();
 };

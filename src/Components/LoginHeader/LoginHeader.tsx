@@ -1,4 +1,3 @@
-import { Outlet } from "react-router-dom";
 import { Logo } from "../Header/Logo";
 import { RegistrationForm } from "../RegistartionForm/RegistrationForm";
 
@@ -11,7 +10,6 @@ export const LoginHeader = (): JSX.Element => {
         <Logo />
       </div>
       <RegistrationForm />
-      <Outlet />
     </div>
   );
 };

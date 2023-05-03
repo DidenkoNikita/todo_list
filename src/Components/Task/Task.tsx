@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { completedTask, removeTask } from '../../store/store';
 import { Checkbox } from '@mui/material';
@@ -18,12 +18,9 @@ interface ITask {
 }
 
 export const Task: FC<IProps> = ({ idBoard }): JSX.Element => {
-  console.log("id board in task component", idBoard);
-  
+  const [complet, setComplet] = useState<boolean>(false);
   const tasks = useSelector((state: any) => state.tasks)
-  .filter((task: ITask) => idBoard === task.board_id);
-  console.log("Taaaaaaaaaaska::",tasks);
-  
+  .filter((task: ITask) => idBoard === task?.board_id);
   return (
     <ol className={css.taskArea}>
       {Array.isArray(tasks) && tasks.map(({id, completed, title}: ITask) => {
@@ -33,9 +30,10 @@ export const Task: FC<IProps> = ({ idBoard }): JSX.Element => {
             key={id} 
           >
             <Checkbox 
-              onClick={() => completedTask(id, completed, title, idBoard)}
+              defaultChecked={complet}
+              onClick={() => {completedTask(id, completed, title, idBoard); setComplet(() => !complet)}}
             />
-            <span className={!completed ? css.notCompleted : css.done}>
+            <span className={!complet ? css.notCompleted : css.done}>
               {title}
             </span>
             <button 

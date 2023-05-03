@@ -1,12 +1,12 @@
+import React from 'react';
 import { Button, TextField } from '@mui/material';
+
 import css from './FilterBoard.module.css';
 
-import React from 'react';
-
 interface FilterBoardProps {
-  search: string;
-  setSearch: React.Dispatch<React.SetStateAction<string>>;
-  handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  search: string,
+  setSearch: React.Dispatch<React.SetStateAction<string>>,
+  handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void
 }
 
 export const FilterBoard: React.FC<FilterBoardProps> = ({search, setSearch, handleSubmit}): JSX.Element => {

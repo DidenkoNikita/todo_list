@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+
 import { profileUser } from "../../store/asyncActions/profileUser";
 import { signUpUser } from "../../store/asyncActions/signUpUser";
 import { Button, TextField } from "@mui/material";
@@ -43,24 +43,14 @@ export const RegistrationForm = (): JSX.Element => {
         }}
         onClick={profileUser(login, password)}
       >
-        <Link 
-          to='/home' 
-          className={css.componentLink}
-        >
-          Войти
-        </Link>
+        Войти
       </Button>
       <Button 
         variant="contained" 
         size="small"
         onClick={(e) => signUpUser(login, password)}
       >
-        <Link 
-          to='/home' 
-          className={css.componentLink}
-        >
           Регистрация
-        </Link>
       </Button>
     </div>
   );

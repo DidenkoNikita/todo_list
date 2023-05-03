@@ -1,8 +1,9 @@
-import { Link, NavLink } from 'react-router-dom';
-import css from './Header.module.css';
+import { NavLink } from 'react-router-dom';
 import { Logo } from './Logo';
 import { Button } from '@mui/material';
 import { logout } from '../../userServise';
+
+import css from './Header.module.css';
 
 export const Header = (): JSX.Element => {
   return (
@@ -10,19 +11,19 @@ export const Header = (): JSX.Element => {
       <Logo />
         <div className={css.headerArea}>
           <NavLink 
-            to='/toDoList' 
+            to='/home/toDoList' 
             className={css.link}
             style={({ isActive }) => ({ color: isActive ? "#21A6FF" : "white" })}>
               Список дел
           </NavLink>
           <NavLink 
-            to='/aboutUs' 
+            to='/home/aboutUs' 
             className={css.link}
             style={({ isActive }) => ({ color: isActive ? "#21A6FF" : "white" })}>
               О нас :
           </NavLink>
           <NavLink 
-            to='/ourProjects' 
+            to='/home/ourProjects' 
             className={css.link}
             style={({ isActive }) => ({ color: isActive ? "#21A6FF" : "white" })}>
               Наши проекты :
@@ -30,14 +31,9 @@ export const Header = (): JSX.Element => {
           <Button 
             variant="contained" 
             size="small"
-            onClick={() => {logout()}}
+            onClick={() => logout()}
           >
-            <Link 
-              to='/' 
-              className={css.componentLink}
-            >
-              Выйти
-            </Link>
+            Выйти
           </Button>
         </div>
     </div>

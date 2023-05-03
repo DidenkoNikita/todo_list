@@ -1,4 +1,6 @@
-export const signUpUser = async (login: string, password: string): Promise<null | undefined> => {
+import { RedirectFunction, redirect } from "react-router-dom";
+
+export const signUpUser = async (login: string, password: string): Promise<Response | null | undefined> => {
   try {
     const response = await fetch('http://127.0.0.1:7000/signup', {
       method: 'POST',
@@ -13,6 +15,7 @@ export const signUpUser = async (login: string, password: string): Promise<null 
     if (response.status === 200) {
       localStorage.setItem('user_id', JSON.stringify(id));
       localStorage.setItem('access_token', JSON.stringify(accessToken));
+      window.location.assign('/home/toDoList');
     } else {
       return null;
     }

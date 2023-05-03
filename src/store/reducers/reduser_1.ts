@@ -41,15 +41,14 @@ function reducer(state: any, action: any) {
         case REMOVE_TASK: 
           return {
             ...state,
-            tasks: [...state.tasks.filter((task: any) => task.task_id !== action.payload.task_id)]
+            tasks: [...state.tasks.filter((task: any) => task.id !== action.payload.task_id)]
           }
 
-        case TASK_NO_COMPLETED: {
+        case TASK_NO_COMPLETED: 
           return {
             ...state,
-            tasks: [state.tasks, action.payload]
+            tasks: [...state.tasks.filter((task: any) => task.id !== action.payload.id)]
           }
-        }
           
       default: return state;
   }

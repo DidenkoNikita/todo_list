@@ -12,7 +12,7 @@ export const removeTasks = (id: number) => {
         body: JSON.stringify({"id": id})
       });
       const data = await response.json();
-      const { task_id } = data;
+      const task_id: number  = data.id;      
       dispatch(RemoveTask(task_id));
     }
     catch (err) {
