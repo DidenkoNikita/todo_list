@@ -1,9 +1,9 @@
-import { Dispatch } from "redux";
-import { RemoveBoard } from "../actionCreators/actionCreator_5";
+import { RemoveBoard } from "../actionCreators/RemoveBoard";
+import { AppDispatch } from "../store";
 
 export const removeDataBoards = (id: number) => {
   let ID: number = id;  
-  return async (dispatch: Dispatch): Promise<void> => {
+  return async (dispatch: AppDispatch): Promise<void> => {
     try {
       const response: Response = await fetch('http://127.0.0.1:7000/boards', {
         method: 'DELETE',

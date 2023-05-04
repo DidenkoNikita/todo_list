@@ -1,5 +1,3 @@
-import { RedirectFunction, redirect } from "react-router-dom";
-
 export const signUpUser = async (login: string, password: string): Promise<Response | null | undefined> => {
   try {
     const response = await fetch('http://127.0.0.1:7000/signup', {

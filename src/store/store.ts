@@ -13,6 +13,10 @@ import { asyncCompletedTasks } from './asyncActions/asyncCompletedTasks';
 
 export const store = createStore(reducer, initialState, applyMiddleware(thunk));
 
+export type RooteState = ReturnType<typeof store.getState>;
+
+export type AppDispatch = typeof store.dispatch;
+
 export const addBoard = (): void => { 
   store.dispatch(recordingBoardDataOnServer());
 }

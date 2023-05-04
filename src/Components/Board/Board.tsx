@@ -1,10 +1,13 @@
-import css from './Board.module.css';
+import { useEffect } from 'react';
+
+import { Button } from '@mui/material';
+import { Delete } from '@mui/icons-material';
+
 import { addManyBoards, addTask, removeBoard } from '../../store/store';
 import { Task } from '../Task/Task';
 import { Props } from '../BoardAddArea/BoardAddArea';
-import { Button } from '@mui/material';
-import { Delete } from '@mui/icons-material';
-import { useEffect } from 'react';
+
+import css from './Board.module.css';
 
 interface Data {
     idBoard: number,

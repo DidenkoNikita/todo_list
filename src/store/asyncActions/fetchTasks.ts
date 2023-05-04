@@ -1,5 +1,5 @@
-import { Dispatch } from "redux";
-import { AddingManyTask } from "../actionCreators/actionCreator_4";
+import { AddingManyTask } from "../actionCreators/AddingManyTask";
+import { AppDispatch } from "../store";
 
 export interface IManyTask {
   id: number,
@@ -9,7 +9,7 @@ export interface IManyTask {
 }
 
 export const fetchTasks = () => { 
-  return async (dispatch: Dispatch): Promise<void> => {
+  return async (dispatch: AppDispatch): Promise<void> => {
     const user_id = JSON.parse(localStorage.getItem('user_id') || '')!;
     try {
       const response: Response = await fetch('http://127.0.0.1:7000/read_tasks', {

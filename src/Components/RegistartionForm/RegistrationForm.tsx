@@ -7,8 +7,8 @@ import { Button, TextField } from "@mui/material";
 import css from './RegistrationForm.module.css';
 
 export const RegistrationForm = (): JSX.Element => {
-  const [login, setLogin] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
+  const [login, setLogin] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
    return (
     <div className={css.form}>
       <TextField 

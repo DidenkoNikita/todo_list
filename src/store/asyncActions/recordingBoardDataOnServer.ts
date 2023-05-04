@@ -1,5 +1,5 @@
-import { Dispatch } from "redux";
-import { AddingManyBoard } from "../actionCreators/actionCreator_3";
+import { AddingManyBoard } from "../actionCreators/AddingManyBoard";
+import { AppDispatch } from "../store";
 
 interface ICreateBoard {
   id: number,
@@ -9,7 +9,7 @@ interface ICreateBoard {
 
 export const recordingBoardDataOnServer = () => {
   const user_id: string = JSON.parse(localStorage.getItem('user_id') || ""); 
-  return async (dispatch: Dispatch): Promise<void> => {
+  return async (dispatch: AppDispatch): Promise<void> => {
     try {
       const response: Response = await fetch(`http://127.0.0.1:7000/boards`, {
         method: 'POST',

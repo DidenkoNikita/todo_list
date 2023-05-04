@@ -1,8 +1,8 @@
-import { Dispatch } from "redux";
-import { RemoveTask } from "../actionCreators/actionCreator_6";
+import { RemoveTask } from "../actionCreators/RemoveTask";
+import { AppDispatch } from "../store";
 
 export const removeTasks = (id: number) => {
-  return async (dispatch: Dispatch): Promise<void> => {
+  return async (dispatch: AppDispatch): Promise<void> => {
     try {
       const response = await fetch('http://127.0.0.1:7000/tasks', {
         method: 'DELETE',

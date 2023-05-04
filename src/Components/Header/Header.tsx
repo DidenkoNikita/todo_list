@@ -1,7 +1,9 @@
 import { NavLink } from 'react-router-dom';
-import { Logo } from './Logo';
+
 import { Button } from '@mui/material';
 import { logout } from '../../userServise';
+
+import { Logo } from './Logo';
 
 import css from './Header.module.css';
 

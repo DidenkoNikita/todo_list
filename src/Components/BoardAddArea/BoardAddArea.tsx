@@ -1,4 +1,5 @@
 import { BoardsArea } from '../Board/Board';
+
 import css from './BoardAddArea.module.css';
 
 export interface Props {

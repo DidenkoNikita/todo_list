@@ -1,5 +1,5 @@
-import { Dispatch } from "redux";
-import { AddingManyTask } from "../actionCreators/actionCreator_4";
+import { AddingManyTask } from "../actionCreators/AddingManyTask";
+import { AppDispatch } from "../store";
 
 interface Itask {
   id: number,
@@ -11,7 +11,7 @@ interface Itask {
 export const addingTasks = (idBoard: number) => {
   const idUser: number = JSON.parse(localStorage.getItem('user_id') || '');
   const body = JSON.stringify({"title": 'Задача', "completed": false, "idBoard": idBoard, "idUser": idUser});
-  return async (dispatch: Dispatch): Promise<void> => {
+  return async (dispatch: AppDispatch): Promise<void> => {
     try {
       const response: Response = await fetch('http://127.0.0.1:7000/tasks', {
         method: 'POST',
