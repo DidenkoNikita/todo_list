@@ -8,7 +8,7 @@ interface ICompleted {
   board_id: number
 }
 
-export const asyncCompletedTasks = (id: number, completed: boolean, title: string, board_id: number) => {
+export const asyncCompletedTasks = (id: number, completed: boolean, title: string, board_id: number): any => {
   let ID: number = id;
   let Completed: boolean = completed;
   let Title: string = title;

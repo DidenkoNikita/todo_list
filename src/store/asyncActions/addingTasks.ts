@@ -8,7 +8,7 @@ interface Itask {
   board_id: number
 }
 
-export const addingTasks = (idBoard: number) => {
+export const addingTasks = (idBoard: number): any => {
   const idUser: number = JSON.parse(localStorage.getItem('user_id') || '');
   const body = JSON.stringify({"title": 'Задача', "completed": false, "idBoard": idBoard, "idUser": idUser});
   return async (dispatch: AppDispatch): Promise<void> => {

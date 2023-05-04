@@ -1,7 +1,7 @@
-import { legacy_createStore as createStore, applyMiddleware} from 'redux';
+import { legacy_createStore as createStore, applyMiddleware, Store, Action, Reducer} from 'redux';
 import thunk from 'redux-thunk';
 
-import reducer from './reducers/reduser_1';
+import reducer, { State } from './reducer/reduser';
 import { initialState } from './initialState';
 import { recordingBoardDataOnServer } from './asyncActions/recordingBoardDataOnServer';
 import { removeDataBoards } from './asyncActions/removeDataBoards';
@@ -11,7 +11,7 @@ import { fetchTasks } from './asyncActions/fetchTasks';
 import { removeTasks } from './asyncActions/removeTasks';
 import { asyncCompletedTasks } from './asyncActions/asyncCompletedTasks';
 
-export const store = createStore(reducer, initialState, applyMiddleware(thunk));
+export const store: Store<State, Action> = createStore(reducer as Reducer, initialState, applyMiddleware(thunk));
 
 export type RooteState = ReturnType<typeof store.getState>;
 

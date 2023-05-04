@@ -1,7 +1,7 @@
 import { RemoveTask } from "../actionCreators/RemoveTask";
 import { AppDispatch } from "../store";
 
-export const removeTasks = (id: number) => {
+export const removeTasks = (id: number): any => {
   return async (dispatch: AppDispatch): Promise<void> => {
     try {
       const response = await fetch('http://127.0.0.1:7000/tasks', {

@@ -1,7 +1,7 @@
 import { RemoveBoard } from "../actionCreators/RemoveBoard";
 import { AppDispatch } from "../store";
 
-export const removeDataBoards = (id: number) => {
+export const removeDataBoards = (id: number): any => {
   let ID: number = id;  
   return async (dispatch: AppDispatch): Promise<void> => {
     try {

@@ -1,16 +1,16 @@
 import { NavLink } from 'react-router-dom';
 
 import { Button } from '@mui/material';
-import { logout } from '../../userServise';
 
-import { Logo } from './Logo';
+import { logout } from '../../userServise';
+import { Name, User } from '../User/User';
 
 import css from './Header.module.css';
 
-export const Header = (): JSX.Element => {
+export const Header = ({name}: Name): JSX.Element => {
   return (
     <div className={css.header}>
-      <Logo />
+        <User name={name} />
         <div className={css.headerArea}>
           <NavLink 
             to='/home/toDoList' 

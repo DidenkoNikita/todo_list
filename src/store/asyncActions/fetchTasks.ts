@@ -8,7 +8,7 @@ export interface IManyTask {
   board_id: number
 }
 
-export const fetchTasks = () => { 
+export const fetchTasks = (): any => { 
   return async (dispatch: AppDispatch): Promise<void> => {
     const user_id = JSON.parse(localStorage.getItem('user_id') || '')!;
     try {

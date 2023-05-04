@@ -7,7 +7,7 @@ interface IBoard {
   tasks: []
 }
 
-export const fetchTodos = () => {
+export const fetchTodos = (): any => {
   return async (dispatch: AppDispatch): Promise<void> => {
     const user_id = JSON.parse(localStorage.getItem('user_id') || '')!;
     try {
