@@ -12,7 +12,6 @@ export const signUpUser = async (login: string, password: string): Promise<void 
     const accessToken: string = data.accessToken;
     if (response.status === 200) {
       localStorage.setItem('user_id', JSON.stringify(id));
-      localStorage.setItem('access_token', JSON.stringify(accessToken));
       window.location.assign('/home/toDoList');
     } 
   } catch (e) {

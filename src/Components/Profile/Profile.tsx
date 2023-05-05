@@ -5,6 +5,7 @@ import { Header } from "../Header/Header";
 import { AboutUs } from "../AboutUs/AboutUs";
 import { OurProjects } from "../OurProjects/OurProjects";
 import { TodoList } from "../TodoList/TodoList";
+import { Box } from "@mui/material";
 
 export const Profile = (): JSX.Element => {
   const [name, setName] = useState<string>('');
@@ -26,7 +27,7 @@ export const Profile = (): JSX.Element => {
   }
   useEffect(() => { userName() }, []);
   return (
-    <div>
+    <Box>
       <Header name={name} />
         <Routes>
           <Route 
@@ -42,6 +43,6 @@ export const Profile = (): JSX.Element => {
             element={<OurProjects />} 
           />
         </Routes> 
-    </div>
+    </Box>
   );
 }; 

@@ -1,4 +1,4 @@
-import { Avatar } from "@mui/material"
+import { Avatar, Box } from "@mui/material"
 
 import css from './User.module.css'
 
@@ -8,13 +8,13 @@ export interface Name {
 
 export const User = ({name}: Name) => {
   return (
-    <div className={css.nameArea}>
+    <Box className={css.nameArea}>
       <Avatar
         sx={{
           bgcolor: '#1976d2'
         }} 
       />
-      <div className={css.name}>{name}</div>
-    </div>
+      <Box className={css.name}>{name}</Box>
+    </Box>
   )
 }

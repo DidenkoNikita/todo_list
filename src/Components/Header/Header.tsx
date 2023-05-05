@@ -1,17 +1,18 @@
 import { NavLink } from 'react-router-dom';
 
-import { Button } from '@mui/material';
+import { Box, Button, ButtonBase } from '@mui/material';
 
 import { logout } from '../../userServise';
 import { Name, User } from '../User/User';
 
 import css from './Header.module.css';
+import { Logout } from '@mui/icons-material';
 
 export const Header = ({name}: Name): JSX.Element => {
   return (
-    <div className={css.header}>
+    <Box className={css.header}>
         <User name={name} />
-        <div className={css.headerArea}>
+        <Box className={css.headerArea}>
           <NavLink 
             to='/home/toDoList' 
             className={css.link}
@@ -30,14 +31,16 @@ export const Header = ({name}: Name): JSX.Element => {
             style={({ isActive }) => ({ color: isActive ? "#21A6FF" : "white" })}>
               Наши проекты :
           </NavLink>
-          <Button 
-            variant="contained" 
-            size="small"
+          <ButtonBase 
             onClick={() => logout()}
           >
-            Выйти
-          </Button>
-        </div>
-    </div>
+            <Logout 
+              sx={{
+                color: 'white'
+              }}
+            />
+          </ButtonBase>
+        </Box>
+    </Box>
   );
 };

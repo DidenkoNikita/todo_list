@@ -1,14 +1,11 @@
 import { useSelector } from "react-redux";
 import { useState } from "react";
 
-import { Button } from "@mui/material";
-
 import { FilterBoard } from "../FilterBoard/FilterBoard";
 import { BoardContainer, Filter } from "../BoardContainer/BoardContainer";
 
-import { recordingBoardDataOnServer } from "../../store/asyncActions/recordingBoardDataOnServer";
-
 import css from './TodoList.module.css';
+import { Box } from "@mui/material";
 
 interface IBoard {
     idBoard: number,
@@ -32,23 +29,13 @@ export const TodoList = (): JSX.Element => {
     })
 
     return (
-        <div className={css.region}>
-            <Button
-                variant="contained" 
-                size="small"
-                sx={{
-                  marginTop: '10px',
-                }} 
-                onClick={() => recordingBoardDataOnServer()}
-            >
-                Добавить доску
-            </Button>
+        <Box className={css.region}>
             <FilterBoard 
                 search={search} 
                 setSearch={setSearch} 
                 handleSubmit={handleSubmit} 
             />
             <BoardContainer filter={filter} />
-        </div>
+        </Box>
     );
 };

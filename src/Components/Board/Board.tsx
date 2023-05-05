@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
-import { Button } from '@mui/material';
-import { Delete } from '@mui/icons-material';
+import { Box, Button, ButtonBase, Container, Paper } from '@mui/material';
+import { Add, Clear, Delete } from '@mui/icons-material';
 
 import { Task } from '../Task/Task';
 import { Props } from '../BoardContainer/BoardContainer';
@@ -24,44 +24,70 @@ export const Board = ({filter}: Props): JSX.Element | null => {
         return null;
     }
     return (
-        <div className={css.area}>
+        <Container 
+            maxWidth="xl"
+            sx={{
+                display: 'flex',
+                gap: '20px',
+                flexWrap: 'wrap',
+                justifyContent: 'center'
+            }}
+        >
             {filter.map(({idBoard, title}: Data) => { 
                 return (
-                    <div className={css.board} key={idBoard}>
-                        <div className={css.headerArea}>
-                            <span className={css.boardName}>
+                    <Paper 
+                        elevation={8} 
+                        key={idBoard}
+                        sx={{
+                            width: '305px',
+                            minHeight: '125px',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'space-between',
+                            alignItems: 'center'
+                        }}
+                        >
+                        <Box className={css.headerArea}>
+                            <Box className={css.boardName}>
                                 {title}
-                            </span>
-                            <button
-                                className={css.deletedButton}
-                                onClick={() => {removeDataBoards(idBoard)}}
-                            >
-                                <Delete 
-                                    fontSize="small"
-                                    sx={{
-                                        alignSelf: 'center',
-                                        color: '#1976d2',
-                                        cursor: 'pointer'
-                                    }}
-                                />
-                            </button>
-                        </div>
+                            </Box>
+                        </Box>
                         <Task idBoard={idBoard} />
-                        <Button 
-                            variant="contained" 
-                            size="small"
-                            onClick={() => {addingTasks(idBoard)}}
+                        <Box 
                             sx={{
-                                marginBottom: '10px',
-                                maxWidth: '150px',
-                                alignSelf: 'center',
+                                display: 'flex',
                             }}
                         >
-                            Добавить задачу
-                        </Button>
-                    </div>
+                            <Button 
+                                variant="contained" 
+                                size="small"
+                                onClick={() => {addingTasks(idBoard)}}
+                                sx={{
+                                    marginBottom: '10px',
+                                    marginRight: '10px',
+                                    maxWidth: '150px',
+                                    alignSelf: 'center',
+                                    paddingLeft: '5px'
+                                }}
+                            >
+                                <Add />
+                                Добавить задачу
+                            </Button>
+                            <ButtonBase
+                                className={css.deletedButton}
+                                onClick={() => {removeDataBoards(idBoard)}}
+                                >
+                                <Clear
+                                    sx={{
+                                        alignSelf: 'center',
+                                        cursor: 'pointer'
+                                    }}
+                                    />
+                            </ButtonBase>
+                        </Box>
+                    </Paper>
                 )
             })}
-        </div>
+        </Container>
     );
 };

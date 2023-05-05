@@ -1,8 +1,8 @@
 import { FC } from 'react'
 import { useSelector } from 'react-redux';
 
-import { Checkbox } from '@mui/material';
-import { Cancel } from '@mui/icons-material';
+import { Box, ButtonBase, Checkbox, Paper } from '@mui/material';
+import { Clear } from '@mui/icons-material';
 
 import { removeTasks } from '../../store/asyncActions/removeTasks';
 
@@ -29,12 +29,13 @@ export const Task: FC<IProps> = ({ idBoard }): JSX.Element => {
   const tasks = useSelector((state: Tasks) => state.tasks)
   .filter((task: ITask) => idBoard === task?.board_id);
   return (
-    <ol className={css.taskArea}>
+    <Box className={css.taskArea}>
       {Array.isArray(tasks) && tasks.map(({id, completed, title}: ITask) => {
         return (
-          <li 
-            className={css.task} 
-            key={id} 
+          <Paper 
+            className={css.task}
+            key={id}
+            elevation={2} 
           >
             <Checkbox 
               checked={completed}
@@ -43,19 +44,15 @@ export const Task: FC<IProps> = ({ idBoard }): JSX.Element => {
             <span className={!completed ? css.notCompleted : css.done}>
               {title}
             </span>
-            <button 
+            <ButtonBase 
               className={css.delete}
               onClick={() => removeTasks(id)}
             >
-              <Cancel 
-                sx={{
-                  color: '#1976d2'
-                }}
-              />
-            </button>
-          </li>
+              <Clear />
+            </ButtonBase>
+          </Paper>
         );
       })}
-    </ol>
+    </Box>
   );
 };

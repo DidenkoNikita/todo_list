@@ -3,6 +3,7 @@ import React from 'react';
 import { Button, TextField } from '@mui/material';
 
 import css from './FilterBoard.module.css';
+import { Search } from '@mui/icons-material';
 
 interface FilterBoardProps {
   search: string,
@@ -23,6 +24,7 @@ export const FilterBoard: React.FC<FilterBoardProps> = ({search, setSearch, hand
         onChange = { event => setSearch(event.target.value) } 
         value={search} 
         sx={{
+          marginTop: '30px',
           marginBottom: '10px'
         }}
       />
@@ -34,6 +36,7 @@ export const FilterBoard: React.FC<FilterBoardProps> = ({search, setSearch, hand
           weight: '50px'
         }}
       >
+        <Search />
         Поиск
       </Button>
     </form>

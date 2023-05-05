@@ -4,18 +4,6 @@
   flex-wrap: wrap;
 }
 
-.board {
-  border: none;
-  width: 305px;
-  min-height: 125px;
-  background-color: rgba(167, 189, 255, 0.096);
-  border: 2px solid rgba(153, 163, 255, 0.1);
-  border-radius: 15px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
 .boardName {
   color: black;
   align-self: center;

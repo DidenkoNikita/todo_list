@@ -2,15 +2,16 @@ import { useState } from "react";
 
 import { profileUser } from "../../store/asyncActions/profileUser";
 import { signUpUser } from "../../store/asyncActions/signUpUser";
-import { Button, TextField } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 
 import css from './RegistrationForm.module.css';
+import { Login, PersonAdd } from "@mui/icons-material";
 
 export const RegistrationForm = (): JSX.Element => {
   const [login, setLogin] = useState<string>('');
   const [password, setPassword] = useState<string>('');
    return (
-    <div className={css.form}>
+    <Box className={css.form}>
       <TextField 
         type="text"
         id="outlined-basic" 
@@ -39,10 +40,15 @@ export const RegistrationForm = (): JSX.Element => {
         variant="contained" 
         size="small"
         sx={{
-          marginBottom: '10px',
+          marginBottom: '10px'
         }}
         onClick={() => profileUser(login, password)}
       >
+        <Login
+          sx={{
+            paddingRight: '3px'
+          }} 
+        />
         Войти
       </Button>
       <Button 
@@ -50,8 +56,13 @@ export const RegistrationForm = (): JSX.Element => {
         size="small"
         onClick={(e) => signUpUser(login, password)}
       >
-          Регистрация
+        <PersonAdd 
+          sx={{
+            paddingRight: '3px'
+          }}
+        />
+        Регистрация
       </Button>
-    </div>
+    </Box>
   );
 };
