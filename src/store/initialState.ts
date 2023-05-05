@@ -1,4 +1,9 @@
-export const initialState = {
+interface InitialState {
+  boards: never[];
+  tasks: never[];
+}
+
+export const initialState: InitialState = {
   boards: [],
   tasks: []
 };

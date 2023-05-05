@@ -4,9 +4,10 @@ import { useSelector } from 'react-redux';
 import { Checkbox } from '@mui/material';
 import { Cancel } from '@mui/icons-material';
 
-import { completedTask, removeTask } from '../../store/store';
+import { removeTasks } from '../../store/asyncActions/removeTasks';
 
 import css from './Task.module.css';
+import { asyncCompletTask } from '../../store/asyncActions/taskComplet';
 
 interface IProps {
   idBoard: number
@@ -37,14 +38,14 @@ export const Task: FC<IProps> = ({ idBoard }): JSX.Element => {
           >
             <Checkbox 
               checked={completed}
-              onClick={() => {completedTask(id, completed, title, idBoard)}}
+              onClick={() => {asyncCompletTask(id, completed, title, idBoard)}}
             />
             <span className={!completed ? css.notCompleted : css.done}>
               {title}
             </span>
             <button 
               className={css.delete}
-              onClick={() => removeTask(id)}
+              onClick={() => removeTasks(id)}
             >
               <Cancel 
                 sx={{

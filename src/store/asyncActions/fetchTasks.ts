@@ -1,5 +1,5 @@
 import { AddingManyTask } from "../actionCreators/AddingManyTask";
-import { AppDispatch } from "../store";
+import { store } from "../store";
 
 export interface IManyTask {
   id: number,
@@ -8,23 +8,22 @@ export interface IManyTask {
   board_id: number
 }
 
-export const fetchTasks = (): any => { 
-  return async (dispatch: AppDispatch): Promise<void> => {
-    const user_id = JSON.parse(localStorage.getItem('user_id') || '')!;
-    try {
-      const response: Response = await fetch('http://127.0.0.1:7000/read_tasks', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({user_id})
-      });
-      const tasks = await response.json();      
-      tasks.forEach((task: any)=> {
-        let {id, completed, title, board_id}: IManyTask = task;
-        dispatch(AddingManyTask(id, completed, title, board_id));
-      })
-    } catch (err) {
-    }
+export const fetchTasks = async (): Promise<void | unknown> => { 
+  const user_id = JSON.parse(localStorage.getItem('user_id') || '')!;
+  try {
+    const response: Response = await fetch('http://127.0.0.1:7000/read_tasks', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({user_id})
+    });
+    const tasks = await response.json();      
+    tasks.forEach((task: any)=> {
+      let {id, completed, title, board_id}: IManyTask = task;
+      store.dispatch(AddingManyTask(id, completed, title, board_id));
+    })
+  } catch (e) {
+    return e;
   }
 };

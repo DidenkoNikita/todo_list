@@ -3,19 +3,23 @@ import { useEffect } from 'react';
 import { Button } from '@mui/material';
 import { Delete } from '@mui/icons-material';
 
-import { addManyBoards, addTask, removeBoard } from '../../store/store';
 import { Task } from '../Task/Task';
-import { Props } from '../BoardAddArea/BoardAddArea';
+import { Props } from '../BoardContainer/BoardContainer';
+
+import { removeDataBoards } from '../../store/asyncActions/removeDataBoards';
+import { addingTasks } from '../../store/asyncActions/addingTasks';
+import { fetchTodos } from '../../store/asyncActions/fetchTodos';
+import { fetchTasks } from '../../store/asyncActions/fetchTasks';
 
 import css from './Board.module.css';
 
 interface Data {
-    idBoard: number,
-    title: string
+    idBoard: number;
+    title: string;
 }
 
-export const BoardsArea = ({filter}: Props): JSX.Element | null => {    
-    useEffect(() => {addManyBoards()}, []);
+export const Board = ({filter}: Props): JSX.Element | null => {    
+    useEffect(() => {fetchTodos(); fetchTasks()}, []);
     if (!filter) {
         return null;
     }
@@ -30,13 +34,14 @@ export const BoardsArea = ({filter}: Props): JSX.Element | null => {
                             </span>
                             <button
                                 className={css.deletedButton}
-                                onClick={() => {removeBoard(idBoard)}}
+                                onClick={() => {removeDataBoards(idBoard)}}
                             >
                                 <Delete 
                                     fontSize="small"
                                     sx={{
                                         alignSelf: 'center',
-                                        color: '#1976d2'
+                                        color: '#1976d2',
+                                        cursor: 'pointer'
                                     }}
                                 />
                             </button>
@@ -45,11 +50,11 @@ export const BoardsArea = ({filter}: Props): JSX.Element | null => {
                         <Button 
                             variant="contained" 
                             size="small"
-                            onClick={() => {addTask(idBoard)}}
+                            onClick={() => {addingTasks(idBoard)}}
                             sx={{
                                 marginBottom: '10px',
                                 maxWidth: '150px',
-                                alignSelf: 'center'
+                                alignSelf: 'center',
                             }}
                         >
                             Добавить задачу

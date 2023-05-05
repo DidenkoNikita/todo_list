@@ -1,10 +1,12 @@
 import { useSelector } from "react-redux";
 import { useState } from "react";
 
-import { addBoard } from "../../store/store";
-import { FilterBoard } from "../FilterBoard/FilterBoard";
-import { BoardAddArea, Filter } from "../BoardAddArea/BoardAddArea";
 import { Button } from "@mui/material";
+
+import { FilterBoard } from "../FilterBoard/FilterBoard";
+import { BoardContainer, Filter } from "../BoardContainer/BoardContainer";
+
+import { recordingBoardDataOnServer } from "../../store/asyncActions/recordingBoardDataOnServer";
 
 import css from './TodoList.module.css';
 
@@ -37,7 +39,7 @@ export const TodoList = (): JSX.Element => {
                 sx={{
                   marginTop: '10px',
                 }} 
-                onClick={() => addBoard()}
+                onClick={() => recordingBoardDataOnServer()}
             >
                 Добавить доску
             </Button>
@@ -46,7 +48,7 @@ export const TodoList = (): JSX.Element => {
                 setSearch={setSearch} 
                 handleSubmit={handleSubmit} 
             />
-            <BoardAddArea filter={filter} />
+            <BoardContainer filter={filter} />
         </div>
     );
 };

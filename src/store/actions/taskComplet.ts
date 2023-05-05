@@ -1,0 +1,1 @@
+export const TASK_COMPLET: string = 'TASK_COMPLET';

@@ -1,4 +1,4 @@
-export const signUpUser = async (login: string, password: string): Promise<Response | null | undefined> => {
+export const signUpUser = async (login: string, password: string): Promise<void | unknown> => {
   try {
     const response = await fetch('http://127.0.0.1:7000/signup', {
       method: 'POST',
@@ -14,11 +14,8 @@ export const signUpUser = async (login: string, password: string): Promise<Respo
       localStorage.setItem('user_id', JSON.stringify(id));
       localStorage.setItem('access_token', JSON.stringify(accessToken));
       window.location.assign('/home/toDoList');
-    } else {
-      return null;
-    }
-  }
-  catch (err) {
-    console.log('createUser::', err);
+    } 
+  } catch (e) {
+    return e;
   }
 }

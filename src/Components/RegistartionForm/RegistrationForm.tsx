@@ -41,7 +41,7 @@ export const RegistrationForm = (): JSX.Element => {
         sx={{
           marginBottom: '10px',
         }}
-        onClick={profileUser(login, password)}
+        onClick={() => profileUser(login, password)}
       >
         Войти
       </Button>
