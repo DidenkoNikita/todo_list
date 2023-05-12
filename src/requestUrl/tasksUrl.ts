@@ -1,0 +1,1 @@
+export const tasksUrl: string = 'http://127.0.0.1:7000/tasks';

@@ -1,9 +1,22 @@
-interface InitialState {
-  boards: never[];
-  tasks: never[];
+interface Task {
+  id: number;
+  completed: boolean 
+  title: string;
+  board_id: number;
 }
 
-export const initialState: InitialState = {
+interface Board {
+  id: number;
+  title: string;
+}
+
+interface State {
+  boards: Board[];
+  tasks: Task[];
+}
+
+
+export const initialState: State = {
   boards: [],
   tasks: []
 };

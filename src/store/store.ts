@@ -1,10 +1,10 @@
-import { legacy_createStore as createStore, applyMiddleware, Store, Action, Reducer} from 'redux';
-import thunk from 'redux-thunk';
+import { configureStore } from "@reduxjs/toolkit";
 
-import reducer, { State } from './reducer/reduser';
-import { initialState } from './initialState';
+import { rootReducer } from "./counterSlice";
 
-export const store: Store<State, Action> = createStore(reducer as Reducer, initialState, applyMiddleware(thunk));
+export const store = configureStore({
+  reducer: rootReducer
+})
 
 export type RooteState = ReturnType<typeof store.getState>;
 

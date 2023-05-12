@@ -1,58 +1,162 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { useSelector } from 'react-redux';
 
-import { Box, ButtonBase, Checkbox, Paper } from '@mui/material';
-import { Clear } from '@mui/icons-material';
+import { Box, Button, ButtonBase, Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, Paper, TextField } from '@mui/material';
+import { Clear, Close, Edit } from '@mui/icons-material';
 
-import { removeTasks } from '../../store/asyncActions/removeTasks';
+import { completTask } from '../../store/asyncActions/completTask';
+import { taskRemove } from '../../store/asyncActions/removeTask';
+import { store } from '../../store/store';
 
 import css from './Task.module.css';
-import { asyncCompletTask } from '../../store/asyncActions/taskComplet';
+import { descriptionTaskUpdate } from '../../store/asyncActions/updateDescriptionTask';
 
-interface IProps {
-  idBoard: number
+interface Props {
+  idBoard: number;
 }
 
-interface ITask {
-  id: number,
-  completed: boolean,
-  title: string,
-  board_id: number,
-  filter: any
+interface Task {
+  id: number;
+  completed: boolean;
+  title: string;
+  board_id: number;
+  filter: any;
 }
 
 interface Tasks {
-  tasks: ITask
+  tasks: Task;
 }
 
-export const Task: FC<IProps> = ({ idBoard }): JSX.Element => {
-  const tasks = useSelector((state: Tasks) => state.tasks)
-  .filter((task: ITask) => idBoard === task?.board_id);
+export const Task: FC<Props> = ({ idBoard }): JSX.Element => {
+  const [open, setOpen] = useState<boolean>(false);
+  const [selectId, setSelectId] = useState<number | null>(null);
+  const [description, setDescription] = useState<string>('')
+
+  const tasks: Task[] = useSelector((state: Tasks) =>
+    state.tasks.filter((task: Task) => idBoard === task?.board_id)
+  );
+
+  const handleClickOpen = (id: number, idBoard: number) => {
+    setSelectId(id);
+    setOpen(true);
+  }
+
+  const handleClose = () => {
+    setOpen(false);
+  }
+
   return (
-    <Box className={css.taskArea}>
-      {Array.isArray(tasks) && tasks.map(({id, completed, title}: ITask) => {
-        return (
-          <Paper 
-            className={css.task}
-            key={id}
-            elevation={2} 
-          >
-            <Checkbox 
-              checked={completed}
-              onClick={() => {asyncCompletTask(id, completed, title, idBoard)}}
-            />
-            <span className={!completed ? css.notCompleted : css.done}>
-              {title}
-            </span>
-            <ButtonBase 
-              className={css.delete}
-              onClick={() => removeTasks(id)}
+    <Box 
+      className={ css.taskArea }
+    >
+      {Array.isArray(tasks) &&
+        tasks.map(({ id, completed, title }: Task) => {
+          return (
+            <Paper 
+              className={ css.task } 
+              key={ id } 
+              elevation={ 2 }
             >
-              <Clear />
-            </ButtonBase>
-          </Paper>
-        );
-      })}
+              <Checkbox
+                checked={completed}
+                onClick={() => {
+                  store.dispatch(completTask(id, completed));
+                }}
+                sx={{
+                  width: '0px',
+                  height: '0px'
+                }}
+              />
+              <span className={ !completed ? css.notCompleted : css.done }>
+                { title }
+              </span>
+                <ButtonBase
+                  onClick={() => {
+                    handleClickOpen(id, idBoard);
+                  }}
+                  sx={{
+                      display: 'flex',
+                      width: '0px',
+                      height: '0px',
+                      alignItems: 'start',
+                      justifySelf: 'start',
+                      marginRight: '10px'
+                  }}
+                >
+                  <Edit 
+                      sx={{
+                          alignSelf: 'center',
+                          cursor: 'pointer'
+                      }}
+                  />   
+                </ButtonBase>
+                <Dialog
+                  open={open}
+                  onClose={handleClose}
+                >
+                  <DialogTitle>Введите новое описание</DialogTitle>
+                  <DialogContent >
+                    <TextField 
+                      type='text'
+                      id='outlined-basic' 
+                      label='Title' 
+                      variant='outlined' 
+                      size='small'
+                      defaultValue=''
+                      onChange={(e) => {
+                        setDescription(e.target.value);
+                      }}
+                      sx={{
+                        marginTop: '10px'
+                      }}
+                    />
+                  </DialogContent>
+                  <DialogActions
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                    }}
+                  >
+                    <Button
+                      variant='contained' 
+                      size='small'
+                      sx={{
+                        marginLeft: '7px',
+                        marginBottom: '10px'
+                      }} 
+                      onClick={() => {
+                        store.dispatch(descriptionTaskUpdate(selectId, description));
+                        handleClose();
+                      }}
+                    >
+                      <Edit />
+                      Изменить
+                    </Button>
+                    <Button
+                      variant='contained' 
+                      size='small'
+                      sx={{
+                      }} 
+                      onClick={() => {
+                          handleClose();
+                      }}
+                    >
+                      <Close />   
+                      Отмена
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+                <ButtonBase
+                  className={ css.delete }
+                  onClick={() => {
+                    store.dispatch(taskRemove(id))
+                  }}
+                >
+                  <Clear />
+                </ButtonBase>
+            </Paper>
+          );
+        })}
     </Box>
   );
 };

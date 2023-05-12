@@ -1,1 +1,0 @@
-export const REMOVE_TASK: string = "REMOVE_TASK";

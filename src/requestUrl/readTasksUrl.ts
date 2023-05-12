@@ -1,0 +1,1 @@
+export const readTasksUrl: string = 'http://127.0.0.1:7000/read_tasks';

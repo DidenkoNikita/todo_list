@@ -1,20 +1,25 @@
 import { useSelector } from "react-redux";
 import { useState } from "react";
 
+import { Box } from "@mui/material";
+
 import { FilterBoard } from "../FilterBoard/FilterBoard";
 import { BoardContainer, Filter } from "../BoardContainer/BoardContainer";
 
 import css from './TodoList.module.css';
-import { Box } from "@mui/material";
 
-interface IBoard {
-    idBoard: number,
-    title: string,
-    tasks: []
+interface Board {
+    id: number;
+    title: string;
+    filter: any;
+}
+
+interface State {
+    boards: Board
 }
 
 export const TodoList = (): JSX.Element => {
-    let boards: IBoard[] = useSelector((state: any) => state.boards);
+    const boards: Board = useSelector((state: State) => state.boards);
     const [ search, setSearch ] = useState<string>('');
     const [query, setQuery ] = useState<string>('');
 
@@ -24,18 +29,18 @@ export const TodoList = (): JSX.Element => {
         setQuery(form.search.value);
     }
 
-    let filter: Filter[] = boards.filter((board: IBoard) => {
+    const filter: Filter[] = boards.filter((board: Board) => {
         return board.title.toLowerCase().includes(query.toLocaleLowerCase())
     })
 
     return (
-        <Box className={css.region}>
+        <Box className={ css.region }>
             <FilterBoard 
-                search={search} 
-                setSearch={setSearch} 
-                handleSubmit={handleSubmit} 
+                search={ search } 
+                setSearch={ setSearch } 
+                handleSubmit={ handleSubmit } 
             />
-            <BoardContainer filter={filter} />
+            <BoardContainer filter={ filter } />
         </Box>
     );
 };

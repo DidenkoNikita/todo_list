@@ -1,1 +1,0 @@
-export const ADDING_A_BOARD: string = "ADDING_A_BOARD";

@@ -1,41 +1,17 @@
-.area{
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
 .boardName {
   color: black;
-  align-self: center;
-  margin-top: 10px;
-  margin-bottom: 35px;
   font-family: 'Montserrat';
   font-weight: bold;
   font-size: 15px;
-}
-
-.taskArea {
-  width: 300px;
-  height: 300px;
-}
-
-.deleted {
-  width: 25px;
-  height: 25px;
-  cursor: pointer;
+  justify-self: center;
+  margin-left: 45px;
 }
 
 .headerArea {
-  display: flex;
-  align-self: center; 
-}
-
-.deletedButton {
-  background-color: transparent;
-  border: none;
-  margin-top: 8px;
-  margin-left: 8px;
-  width: 25px;
-  height: 25px;
-  padding: 0;
+  display: grid;
+  width: 305px;
+  height: 30px;
+  margin-bottom: 21px;
+  grid-template-columns: 5fr 1fr 0px;
+  align-items: center;
 }

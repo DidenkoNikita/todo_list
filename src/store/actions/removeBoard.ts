@@ -1,1 +1,0 @@
-export const REMOVE_BOARD: string = "REMOVE_BOARD";
