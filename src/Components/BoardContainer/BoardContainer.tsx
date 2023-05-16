@@ -4,7 +4,7 @@ import { Box, Button, } from '@mui/material';
 import { Add } from '@mui/icons-material';
 
 import { Board } from '../Board/Board';
-import { ModalWondow } from '../ModalWondow/ModalWindow';
+import { ModalWindow } from '../ModalWindow/ModalWindow';
 
 import { addBoard } from '../../store/asyncActions/addBoard';
 
@@ -32,7 +32,7 @@ export const BoardContainer = ({ filter }: Props): JSX.Element => {
     }
   
     const handleClose = () => {
-      setOpen(false);
+      setOpen(!open);
     }
     
     return (
@@ -50,9 +50,9 @@ export const BoardContainer = ({ filter }: Props): JSX.Element => {
           <Add />
           Добавить доску
         </Button>
-        <ModalWondow 
+        <ModalWindow 
           open={open}
-          handleClose={() => handleClose()} 
+          handleClose={handleClose} 
           dialogTitle={dialogTitle} 
           setSelectTitle={setTitle} 
           buttonTitle={buttonTitle} 

@@ -34,10 +34,19 @@ export const completTask = (id: number, completed: boolean): ThunkAction<
     });
     const data = await response.json();
     const { id, completed } = data.task;
-    if (response.status === 204 || response.status === 200) {
+    if (response.status === 200) {
       dispatch(taskComplete({ id, completed }));
       localStorage.setItem('refresh_token', JSON.stringify(data.token));
-    } else {
+    }
+
+    if (response.status === 201) {
+      console.log(data);
+      const refreshToken = data;
+      localStorage.setItem('refresh_token', JSON.stringify(refreshToken));
+      alert('Попробуй ещё раз');
+    }
+
+    if (response.status === 401) {
       window.location.assign('/');
     }
   } catch (e) {

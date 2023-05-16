@@ -33,12 +33,21 @@ export const addAllTask = (): ThunkAction<
       body: JSON.stringify({user_id})
     });
     const data = await response.json();   
-    if (response.status === 204 || response.status === 200) {
+    if (response.status === 200) {
       dispatch(addingManyTask(data.tasks));
       localStorage.setItem('refresh_token', JSON.stringify(data.token));
-    } else {
+    }
+    
+    if (response.status === 201) {
+      console.log(data);
+      const refreshToken = data;
+      localStorage.setItem('refresh_token', JSON.stringify(refreshToken));
+      window.location.reload();
+    }
+
+    if (response.status === 401) {
       window.location.assign('/');
-    } 
+    }
   } catch (e) {
     return console.log(e);
   }

@@ -31,7 +31,8 @@ export const TodoList = (): JSX.Element => {
 
     const filter: Filter[] = boards.filter((board: Board) => {
         return board?.title?.toLowerCase().includes(query.toLocaleLowerCase())!;
-    })
+    }).sort((a: Board, b: Board) => a.id - b.id);
+
 
     return (
         <Box className={ css.region }>

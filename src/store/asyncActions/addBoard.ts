@@ -31,10 +31,19 @@ export const addBoard = (id : null, title: string): ThunkAction<
       body: JSON.stringify({title, user_id})
     });
     const data = await response.json();   
-    if (response.status === 204 || response.status === 200) {
-      dispatch(addingABoard(data));
+    if (response.status === 200) {
+      dispatch(addingABoard(data.board));
       localStorage.setItem('refresh_token', JSON.stringify(data.token));
-    } else {
+    } 
+
+    if (response.status === 201) {
+      console.log(data);
+      const refreshToken = data;
+      localStorage.setItem('refresh_token', JSON.stringify(refreshToken));
+      alert('Попробуй ещё раз');
+    }
+
+    if (response.status === 401) {
       window.location.assign('/');
     }
   } catch (e) {

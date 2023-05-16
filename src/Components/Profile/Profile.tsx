@@ -28,9 +28,19 @@ export const Profile = (): JSX.Element => {
         headers,
         body: JSON.stringify({ user_id })
       });
+
       const data = await response.json();     
-      localStorage.setItem('refresh_token', JSON.stringify(data.token))
-      setName(data.name);
+      if (response.status === 200) {
+        localStorage.setItem('refresh_token', JSON.stringify(data.token))
+        setName(data.name);
+      }
+
+      if (response.status === 201) {
+        console.log(data);
+        const refreshToken = data;
+        localStorage.setItem('refresh_token', JSON.stringify(refreshToken));
+        window.location.reload();
+      }
     } catch (err) {
       console.log(err);
     }

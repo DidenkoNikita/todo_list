@@ -32,10 +32,19 @@ export const descriptionTaskUpdate = (selectId: number | null, description: stri
     });
     const data = await response.json();
     const { id, title } = data.task;
-    if (response.status === 204 || response.status === 200) {
+    if (response.status === 200) {
       dispatch(updateDescriptionTask({ id, title }));
       localStorage.setItem('refresh_token', JSON.stringify(data.token));
-    } else {
+    } 
+
+    if (response.status === 201) {
+      console.log(data);
+      const refreshToken = data;
+      localStorage.setItem('refresh_token', JSON.stringify(refreshToken));
+      alert('Попробуй ещё раз');
+    }
+
+    if (response.status === 401) {
       window.location.assign('/');
     }
   } catch (e) {

@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import { Box, ButtonBase, Checkbox, Paper } from '@mui/material';
 import { Clear, Edit } from '@mui/icons-material';
 
-import { ModalWondow } from '../ModalWondow/ModalWindow';
 
 import { completTask } from '../../store/asyncActions/completTask';
 import { taskRemove } from '../../store/asyncActions/removeTask';
@@ -12,6 +11,7 @@ import { store } from '../../store/store';
 import { descriptionTaskUpdate } from '../../store/asyncActions/updateDescriptionTask';
 
 import css from './Task.module.css';
+import { ModalWindow } from '../ModalWindow/ModalWindow';
 
 interface Props {
   idBoard: number;
@@ -38,7 +38,8 @@ export const Task: FC<Props> = ({ idBoard }): JSX.Element => {
   const buttonTitle: string = 'Изменить';
 
   const tasks: Tasks[] = useSelector((state: ITasks) =>
-    state.tasks.filter((task: Tasks) => idBoard === task?.board_id)
+    state.tasks.filter((task: Tasks) => idBoard === task?.board_id).sort((a: Tasks, b: Tasks) => a.id - b.id)
+
   );
 
   const handleClickOpen = (id: number) => {
@@ -46,7 +47,7 @@ export const Task: FC<Props> = ({ idBoard }): JSX.Element => {
     setOpen(true);
   }
 
-  const handleClose = () => {
+  const handleCloseTask = () => {
     setOpen(!open);
   }
 
@@ -100,9 +101,9 @@ export const Task: FC<Props> = ({ idBoard }): JSX.Element => {
                       }}
                   />   
                 </ButtonBase>
-                <ModalWondow 
+                <ModalWindow 
                   open={open} 
-                  handleClose={handleClose} 
+                  handleClose={handleCloseTask} 
                   dialogTitle={dialogTitle} 
                   setSelectTitle={setDescription} 
                   buttonTitle={buttonTitle} 

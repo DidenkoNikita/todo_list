@@ -32,11 +32,13 @@ export const taskSlice = createSlice({
     taskComplete: (state, action: PayloadAction<{ id: number, completed: boolean }>): Task[] => {
       const { payload } = action;
       state = state.map((task) => (task.id === payload.id ? { ...task, completed: payload.completed } : task));
+      state.sort((a, b) => a.id - b.id);
       return state;
     },
     updateDescriptionTask: (state, action: PayloadAction<{ id: number, title: string }>): Task[] => {
       const { payload } = action;
       state = state.map((task) => (task.id === payload.id ? { ...task, title: payload.title } : task));
+      state.sort((a, b) => a.id - b.id);
       return state;
     }
   },

@@ -14,7 +14,7 @@ import { store } from '../../store/store';
 import { titleBoardUpdate } from '../../store/asyncActions/updateTitleBoard';
 
 import css from './Board.module.css';
-import { ModalWondow } from '../ModalWondow/ModalWindow';
+import { ModalWindow } from '../ModalWindow/ModalWindow';
 
 interface Data {
     id: number;
@@ -36,7 +36,7 @@ export const Board = ({ filter }: Props): JSX.Element | null => {
     useEffect(() => {
         store.dispatch(addAllBoard());
         store.dispatch(addAllTask());
-    }, [filter]);
+    }, []);
 
     if (!filter) {
         return null;
@@ -123,7 +123,7 @@ export const Board = ({ filter }: Props): JSX.Element | null => {
                                             }}
                                         />   
                                     </ButtonBase>
-                                    <ModalWondow 
+                                    <ModalWindow
                                         open={openBoard} 
                                         handleClose={handleCloseBoard} 
                                         dialogTitle={dialogTitleEditBoard} 
@@ -178,7 +178,7 @@ export const Board = ({ filter }: Props): JSX.Element | null => {
                                         Добавить задачу
                                     </Button>
                                 </Box>
-                                <ModalWondow 
+                                <ModalWindow
                                     open={open} 
                                     handleClose={handleClose} 
                                     dialogTitle={dialogTitleTask} 

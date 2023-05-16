@@ -13,7 +13,7 @@ interface Modal {
   request: any;
 }
 
-export const ModalWondow = ({open, dialogTitle, setSelectTitle, handleClose, buttonTitle, selectTitle, selectId, request}: Modal): JSX.Element => {
+export const ModalWindow = ({open, dialogTitle, setSelectTitle, handleClose, buttonTitle, selectTitle, selectId, request}: Modal): JSX.Element => {
   const handleKeyDown = (event: any) => {
     if(event.key === 'Enter') {
       store.dispatch(request(selectId, selectTitle));
@@ -36,7 +36,7 @@ export const ModalWondow = ({open, dialogTitle, setSelectTitle, handleClose, but
           label='Title' 
           variant='outlined' 
           size='small'
-          defaultValue=''
+          defaultValue={null}
           onKeyDown={handleKeyDown}
           onChange={(e) => {
               setSelectTitle(e.target.value);
