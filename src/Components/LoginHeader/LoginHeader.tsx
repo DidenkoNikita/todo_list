@@ -1,9 +1,9 @@
 import { Box } from "@mui/material";
 
 import { Logo } from "../Header/Logo";
+import { LoginForm } from "../LoginForm/LoginForm";
 
 import css from './LoginHeader.module.css'
-import { LoginForm } from "../LoginForm/LoginForm";
 
 export const LoginHeader = (): JSX.Element => {
   return (

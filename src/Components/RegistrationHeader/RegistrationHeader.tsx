@@ -1,9 +1,10 @@
 import { Box } from "@mui/material";
 
 import { Logo } from "../Header/Logo";
+import { RegistrationForm } from "../RegistrationForm/RegistrationForm";
 
 import css from './RegistrationHeader.module.css'
-import { RegistrationForm } from "../RegistrationForm/RegistrationForm";
+
 
 export const RegistrationHeader = (): JSX.Element => {
   return (

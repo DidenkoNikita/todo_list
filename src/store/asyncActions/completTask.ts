@@ -18,17 +18,28 @@ export const completTask = (id: number, completed: boolean): ThunkAction<
 > => async (dispatch): Promise<void | unknown> => {
   const ID: number = id;
   const Completed: boolean = completed;
+  const user_id: number | string = JSON.parse(localStorage.getItem('user_id') || '')!;
+  const refreshToken: string = JSON.parse(localStorage.getItem('refresh_token') || '');
+  
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${refreshToken}`,
+  };
+
   try {
     const response: Response = await fetch(`${taskCompletedUrl}`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ id: ID, completed: Completed })
+      headers,
+      body: JSON.stringify({ id: ID, completed: Completed, user_id})
     });
-    const data: Complet = await response.json();
-    const { id, completed } = data;
-    dispatch(taskComplete({ id, completed }));
+    const data = await response.json();
+    const { id, completed } = data.task;
+    if (response.status === 204 || response.status === 200) {
+      dispatch(taskComplete({ id, completed }));
+      localStorage.setItem('refresh_token', JSON.stringify(data.token));
+    } else {
+      window.location.assign('/');
+    }
   } catch (e) {
     return console.log(e);
   }

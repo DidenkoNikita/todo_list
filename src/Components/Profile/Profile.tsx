@@ -15,15 +15,21 @@ export const Profile = (): JSX.Element => {
 
   const userName = async (): Promise<void> => {
     const user_id = JSON.parse(localStorage.getItem('user_id') || '')!;
+    const refreshToken: string = JSON.parse(localStorage.getItem('refresh_token') || '');
+  
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${refreshToken}`,
+    };
+
     try {
       const response: Response = await fetch(`${userUrl}`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers,
         body: JSON.stringify({ user_id })
       });
       const data = await response.json();     
+      localStorage.setItem('refresh_token', JSON.stringify(data.token))
       setName(data.name);
     } catch (err) {
       console.log(err);

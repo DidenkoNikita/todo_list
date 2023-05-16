@@ -1,7 +1,5 @@
-import { requestLogout } from "./requestLogout";
-
 export const logout = () => {
-  localStorage.clear();
+  localStorage.removeItem('user_id');
+  localStorage.removeItem('refresh_token');
   window.location.assign('/');
-  requestLogout();
 }

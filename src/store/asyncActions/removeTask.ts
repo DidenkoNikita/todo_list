@@ -16,17 +16,28 @@ export const taskRemove = (id: number): ThunkAction<
   PayloadAction<Task> 
 > => async (dispatch): Promise<void | unknown> => {
   const Id = id;
+  const user_id: number | string = JSON.parse(localStorage.getItem('user_id') || '')!;
+  const refreshToken: string = JSON.parse(localStorage.getItem('refresh_token') || '');
+  
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${refreshToken}`,
+  };
+
   try {
     const response: Response = await fetch(`${tasksUrl}`, {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({id: Id})
+      headers,
+      body: JSON.stringify({id: Id, user_id})
     });
     const data = await response.json();        
     const {id} = data.task; 
-    dispatch(removeTask({id}));
+    if (response.status === 204 || response.status === 200) {
+      dispatch(removeTask({id}));
+      localStorage.setItem('refresh_token', JSON.stringify(data.token));
+    } else {
+      window.location.assign('/');
+    }
   } catch (e) {
     return console.log(e);
   }

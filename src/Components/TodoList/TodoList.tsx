@@ -30,7 +30,7 @@ export const TodoList = (): JSX.Element => {
     }
 
     const filter: Filter[] = boards.filter((board: Board) => {
-        return board.title.toLowerCase().includes(query.toLocaleLowerCase())
+        return board?.title?.toLowerCase().includes(query.toLocaleLowerCase())!;
     })
 
     return (

@@ -1,21 +1,23 @@
 import { FC, useState } from 'react'
 import { useSelector } from 'react-redux';
 
-import { Box, Button, ButtonBase, Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, Paper, TextField } from '@mui/material';
-import { Clear, Close, Edit } from '@mui/icons-material';
+import { Box, ButtonBase, Checkbox, Paper } from '@mui/material';
+import { Clear, Edit } from '@mui/icons-material';
+
+import { ModalWondow } from '../ModalWondow/ModalWindow';
 
 import { completTask } from '../../store/asyncActions/completTask';
 import { taskRemove } from '../../store/asyncActions/removeTask';
 import { store } from '../../store/store';
+import { descriptionTaskUpdate } from '../../store/asyncActions/updateDescriptionTask';
 
 import css from './Task.module.css';
-import { descriptionTaskUpdate } from '../../store/asyncActions/updateDescriptionTask';
 
 interface Props {
   idBoard: number;
 }
 
-interface Task {
+interface Tasks {
   id: number;
   completed: boolean;
   title: string;
@@ -23,26 +25,29 @@ interface Task {
   filter: any;
 }
 
-interface Tasks {
-  tasks: Task;
+interface ITasks {
+  tasks: Tasks;
 }
 
 export const Task: FC<Props> = ({ idBoard }): JSX.Element => {
   const [open, setOpen] = useState<boolean>(false);
   const [selectId, setSelectId] = useState<number | null>(null);
-  const [description, setDescription] = useState<string>('')
+  const [description, setDescription] = useState<string>('');
 
-  const tasks: Task[] = useSelector((state: Tasks) =>
-    state.tasks.filter((task: Task) => idBoard === task?.board_id)
+  const dialogTitle: string = 'Введите новое описание';
+  const buttonTitle: string = 'Изменить';
+
+  const tasks: Tasks[] = useSelector((state: ITasks) =>
+    state.tasks.filter((task: Tasks) => idBoard === task?.board_id)
   );
 
-  const handleClickOpen = (id: number, idBoard: number) => {
+  const handleClickOpen = (id: number) => {
     setSelectId(id);
     setOpen(true);
   }
 
   const handleClose = () => {
-    setOpen(false);
+    setOpen(!open);
   }
 
   return (
@@ -50,7 +55,7 @@ export const Task: FC<Props> = ({ idBoard }): JSX.Element => {
       className={ css.taskArea }
     >
       {Array.isArray(tasks) &&
-        tasks.map(({ id, completed, title }: Task) => {
+        tasks.map(({ id, completed, title }: Tasks) => {
           return (
             <Paper 
               className={ css.task } 
@@ -67,12 +72,17 @@ export const Task: FC<Props> = ({ idBoard }): JSX.Element => {
                   height: '0px'
                 }}
               />
-              <span className={ !completed ? css.notCompleted : css.done }>
+              <span 
+                className={ !completed ? css.notCompleted : css.done }
+                onDoubleClick={() => {
+                  handleClickOpen(id);
+                }}
+              >
                 { title }
               </span>
                 <ButtonBase
                   onClick={() => {
-                    handleClickOpen(id, idBoard);
+                    handleClickOpen(id);
                   }}
                   sx={{
                       display: 'flex',
@@ -90,62 +100,16 @@ export const Task: FC<Props> = ({ idBoard }): JSX.Element => {
                       }}
                   />   
                 </ButtonBase>
-                <Dialog
-                  open={open}
-                  onClose={handleClose}
-                >
-                  <DialogTitle>Введите новое описание</DialogTitle>
-                  <DialogContent >
-                    <TextField 
-                      type='text'
-                      id='outlined-basic' 
-                      label='Title' 
-                      variant='outlined' 
-                      size='small'
-                      defaultValue=''
-                      onChange={(e) => {
-                        setDescription(e.target.value);
-                      }}
-                      sx={{
-                        marginTop: '10px'
-                      }}
-                    />
-                  </DialogContent>
-                  <DialogActions
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                    }}
-                  >
-                    <Button
-                      variant='contained' 
-                      size='small'
-                      sx={{
-                        marginLeft: '7px',
-                        marginBottom: '10px'
-                      }} 
-                      onClick={() => {
-                        store.dispatch(descriptionTaskUpdate(selectId, description));
-                        handleClose();
-                      }}
-                    >
-                      <Edit />
-                      Изменить
-                    </Button>
-                    <Button
-                      variant='contained' 
-                      size='small'
-                      sx={{
-                      }} 
-                      onClick={() => {
-                          handleClose();
-                      }}
-                    >
-                      <Close />   
-                      Отмена
-                    </Button>
-                  </DialogActions>
-                </Dialog>
+                <ModalWondow 
+                  open={open} 
+                  handleClose={handleClose} 
+                  dialogTitle={dialogTitle} 
+                  setSelectTitle={setDescription} 
+                  buttonTitle={buttonTitle} 
+                  selectTitle={description} 
+                  selectId={selectId} 
+                  request={descriptionTaskUpdate}
+                />
                 <ButtonBase
                   className={ css.delete }
                   onClick={() => {

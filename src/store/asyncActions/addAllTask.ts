@@ -3,7 +3,6 @@ import { PayloadAction } from "@reduxjs/toolkit";
 
 import { RooteState } from "../store";
 import { addingManyTask } from "../counter/taskSlice";
-import { readBoardsUrl } from "../../requestUrl/readBoardsUrl";
 import { readTasksUrl } from "../../requestUrl/readTasksUrl";
 
 interface CreateTask {
@@ -20,16 +19,26 @@ export const addAllTask = (): ThunkAction<
   PayloadAction<CreateTask[]> 
 > => async (dispatch): Promise<void | unknown> => {
   const user_id: number | string = JSON.parse(localStorage.getItem('user_id') || "")!; 
+  const refreshToken: string = JSON.parse(localStorage.getItem('refresh_token') || '');
+
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${refreshToken}`,
+  };
+
   try {
     const response: Response = await fetch(`${readTasksUrl}`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers,
       body: JSON.stringify({user_id})
     });
-    const data = await response.json();      
-    dispatch(addingManyTask(data));
+    const data = await response.json();   
+    if (response.status === 204 || response.status === 200) {
+      dispatch(addingManyTask(data.tasks));
+      localStorage.setItem('refresh_token', JSON.stringify(data.token));
+    } else {
+      window.location.assign('/');
+    } 
   } catch (e) {
     return console.log(e);
   }

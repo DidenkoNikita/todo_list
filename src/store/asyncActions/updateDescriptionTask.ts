@@ -16,17 +16,28 @@ export const descriptionTaskUpdate = (selectId: number | null, description: stri
   unknown,
   PayloadAction<Task>
 > => async (dispatch): Promise<void | unknown> => {
+  const user_id: number | string = JSON.parse(localStorage.getItem('user_id') || '')!;
+  const refreshToken: string = JSON.parse(localStorage.getItem('refresh_token') || '');
+  
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${refreshToken}`,
+  };
+
   try {
     const response: Response = await fetch(`${updateDescriptionTaskUrl}`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ id: selectId, title: description })
+      headers,
+      body: JSON.stringify({ id: selectId, title: description, user_id })
     });
-    const data: Task = await response.json();
-    const { id, title } = data;
-    dispatch(updateDescriptionTask({ id, title }));
+    const data = await response.json();
+    const { id, title } = data.task;
+    if (response.status === 204 || response.status === 200) {
+      dispatch(updateDescriptionTask({ id, title }));
+      localStorage.setItem('refresh_token', JSON.stringify(data.token));
+    } else {
+      window.location.assign('/');
+    }
   } catch (e) {
     return console.log(e);
   }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import { Box, Button, ButtonBase, Container, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Paper, TextField } from '@mui/material';
-import { Add, Clear, Close, Edit } from '@mui/icons-material';
+import { Box, Button, ButtonBase, Container, Grid, Paper} from '@mui/material';
+import { Add, Clear, Edit } from '@mui/icons-material';
 
 import { Task } from '../Task/Task';
 import { Props } from '../BoardContainer/BoardContainer';
@@ -11,9 +11,10 @@ import { addAllBoard } from '../../store/asyncActions/addAllBoard';
 import { addAllTask } from '../../store/asyncActions/addAllTask';
 import { boardRemove } from '../../store/asyncActions/removeBoard';
 import { store } from '../../store/store';
+import { titleBoardUpdate } from '../../store/asyncActions/updateTitleBoard';
 
 import css from './Board.module.css';
-import { titleBoardUpdate } from '../../store/asyncActions/updateTitleBoard';
+import { ModalWondow } from '../ModalWondow/ModalWindow';
 
 interface Data {
     id: number;
@@ -26,6 +27,11 @@ export const Board = ({ filter }: Props): JSX.Element | null => {
     const [description, setDescription] = useState<string>('');
     const [selectTitle, setSelectTitle] = useState<string>('');
     const [selectId, setSelectId] = useState<number | null>(null);
+    
+    const dialogTitleEditBoard: string = 'Введите новый заголовок';
+    const buttonTitleEditBoard: string = 'Изменить';
+    const dialogTitleTask: string = 'Введите описание задачи';
+    const buttonTitleTask: string = 'Добавить задачу';
 
     useEffect(() => {
         store.dispatch(addAllBoard());
@@ -61,7 +67,7 @@ export const Board = ({ filter }: Props): JSX.Element | null => {
                 display: 'flex',
                 gap: '20px',
                 flexWrap: 'wrap',
-                justifyContent: 'center'
+                justifyContent: 'center',
             }}
         >
             <Grid 
@@ -89,9 +95,14 @@ export const Board = ({ filter }: Props): JSX.Element | null => {
                                 }}
                                 >
                                 <Box className={ css.headerArea }>
-                                    <Box className={ css.boardName }>
+                                    <div 
+                                        onDoubleClick={() => {
+                                            handleClickOpenBoard(id);
+                                        }} 
+                                        className={ css.boardName } 
+                                    >
                                         { title }
-                                    </Box>
+                                    </div>
                                     <ButtonBase
                                         onClick={() => {
                                             handleClickOpenBoard(id);
@@ -112,62 +123,16 @@ export const Board = ({ filter }: Props): JSX.Element | null => {
                                             }}
                                         />   
                                     </ButtonBase>
-                                    <Dialog
-                                        open={openBoard}
-                                        onClose={handleCloseBoard}
-                                    >
-                                        <DialogTitle>Введите новый заголовок</DialogTitle>
-                                        <DialogContent >
-                                            <TextField 
-                                                type='text'
-                                                id='outlined-basic' 
-                                                label='Title' 
-                                                variant='outlined' 
-                                                size='small'
-                                                defaultValue=''
-                                                onChange={(e) => {
-                                                    setSelectTitle(e.target.value);
-                                                }}
-                                                sx={{
-                                                    marginTop: '10px'
-                                                }}
-                                            />
-                                        </DialogContent>
-                                        <DialogActions
-                                            sx={{
-                                                display: 'flex',
-                                                flexDirection: 'column',
-                                            }}
-                                        >
-                                            <Button
-                                                variant='contained' 
-                                                size='small'
-                                                sx={{
-                                                    marginLeft: '7px',
-                                                    marginBottom: '10px'
-                                                }} 
-                                                onClick={() => {
-                                                    store.dispatch(titleBoardUpdate(selectId, selectTitle));
-                                                    handleCloseBoard();
-                                                }}
-                                            >
-                                                <Edit />
-                                                Изменить
-                                            </Button>
-                                            <Button
-                                                variant='contained' 
-                                                size='small'
-                                                sx={{
-                                                }} 
-                                                onClick={() => {
-                                                    handleCloseBoard();
-                                                }}
-                                            >
-                                                <Close />   
-                                                Отмена
-                                            </Button>
-                                        </DialogActions>
-                                    </Dialog>
+                                    <ModalWondow 
+                                        open={openBoard} 
+                                        handleClose={handleCloseBoard} 
+                                        dialogTitle={dialogTitleEditBoard} 
+                                        setSelectTitle={setSelectTitle} 
+                                        buttonTitle={buttonTitleEditBoard} 
+                                        selectTitle={selectTitle} 
+                                        selectId={selectId} 
+                                        request={titleBoardUpdate}
+                                    />
                                     <ButtonBase
                                         onClick={() => {
                                             store.dispatch(boardRemove(id))
@@ -213,61 +178,16 @@ export const Board = ({ filter }: Props): JSX.Element | null => {
                                         Добавить задачу
                                     </Button>
                                 </Box>
-                                <Dialog
-                                    open={open}
-                                    onClose={handleClose}
-                                >
-                                    <DialogTitle>Введите описание задачи</DialogTitle>
-                                    <DialogContent>
-                                        <TextField 
-                                            type='text'
-                                            id='outlined-basic' 
-                                            label='Description' 
-                                            variant='outlined' 
-                                            size='small'
-                                            defaultValue=''
-                                            onChange={(e) => {
-                                                setDescription(e.target.value);
-                                            }}
-                                            sx={{
-                                                marginTop: '10px'
-                                            }}
-                                        />
-                                    </DialogContent>
-                                    <DialogActions
-                                        sx={{
-                                            display: 'flex',
-                                            flexDirection: 'column',
-                                        }}
-                                    >
-                                        <Button
-                                            variant='contained' 
-                                            size='small'
-                                            sx={{
-                                                marginBottom: '10px'
-                                            }} 
-                                            onClick={() => {
-                                                store.dispatch(addTask(selectId, description));
-                                                handleClose();
-                                            }}
-                                        >
-                                            <Add />
-                                            Добавить задачу
-                                        </Button>
-                                        <Button
-                                            variant='contained' 
-                                            size='small'
-                                            sx={{
-                                            }} 
-                                            onClick={() => {
-                                                handleClose();
-                                            }}
-                                        >
-                                            <Close />   
-                                            Отмена
-                                        </Button>
-                                    </DialogActions>
-                                </Dialog>
+                                <ModalWondow 
+                                    open={open} 
+                                    handleClose={handleClose} 
+                                    dialogTitle={dialogTitleTask} 
+                                    setSelectTitle={setDescription} 
+                                    buttonTitle={buttonTitleTask} 
+                                    selectTitle={description} 
+                                    selectId={selectId} 
+                                    request={addTask}
+                                />
                             </Paper>
                         </Grid>
                     )

@@ -1,14 +1,17 @@
 import { Box, Button, TextField } from "@mui/material";
 import { Login, PersonAdd } from "@mui/icons-material";
 
-import css from './LoginForm.module.css';
-
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+
 import * as Yup from 'yup';
+
 import { loginUrl } from "../../requestUrl/loginUrl";
 
+import css from './LoginForm.module.css';
+
 interface Data {
-  user_id: number;
+  id: number;
+  refreshToken: string;
 }
 
 export const LoginForm = (): JSX.Element => {
@@ -34,9 +37,12 @@ export const LoginForm = (): JSX.Element => {
         body: JSON.stringify({login, password})
       });
       const data = await response.json();
-      const {user_id}: Data = data;      
+      console.log(data);
+      
+      const {id, refreshToken}: Data = data;      
       if (response.status === 200) {
-        localStorage.setItem('user_id', JSON.stringify(user_id));
+        localStorage.setItem('user_id', JSON.stringify(id));
+        localStorage.setItem('refresh_token', JSON.stringify(refreshToken))
         window.location.assign('/home/toDoList');
         actions.setSubmitting(false);
       }
@@ -46,14 +52,44 @@ export const LoginForm = (): JSX.Element => {
     }
   };
 
+  const handleKeyDown = async (values: typeof initialValues, actions: any, event: any): Promise<void> => {
+    if (event.key === 'Enter') {
+      const login: string = values.login;
+      const password: string = values.password;
+      try {
+        const response: Response = await fetch(`${loginUrl}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({login, password})
+        });
+        const data = await response.json();
+        console.log(data);
+        
+        const {id, refreshToken}: Data = data;      
+        if (response.status === 200) {
+          localStorage.setItem('user_id', JSON.stringify(id));
+          localStorage.setItem('refresh_token', JSON.stringify(refreshToken))
+          window.location.assign('/home/toDoList');
+          actions.setSubmitting(false);
+        }
+      } catch (error) {
+        console.error('Произошла ошибка', error);
+        actions.setSubmitting(false);
+      }
+    }
+  };
+
   return (
     <Box>
       <Formik 
         initialValues={initialValues} 
         validationSchema={validationSchema} 
         onSubmit={handleSubmit}
-        >
-        <Form className={css.form}>
+        onKeyDown={handleKeyDown}
+      >
+        <Form className={css.form} >
           <Box
             sx={{
               fontSize: '20px'

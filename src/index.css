@@ -6,9 +6,28 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  height: 100%;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.region-light {
+  background-color: #f0f0f0;
+  /* height: 100%; */
+  min-height: 100vh;
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.region-dark {
+  background-color: #303030;
+  /* height: 100%; */
+  min-height: 100vh;
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
 }

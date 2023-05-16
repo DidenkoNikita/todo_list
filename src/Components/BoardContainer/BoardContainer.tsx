@@ -1,13 +1,14 @@
-import { Board } from '../Board/Board';
+import { useState } from 'react';
 
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
-import { Add, Close } from '@mui/icons-material';
+import { Box, Button, } from '@mui/material';
+import { Add } from '@mui/icons-material';
+
+import { Board } from '../Board/Board';
+import { ModalWondow } from '../ModalWondow/ModalWindow';
 
 import { addBoard } from '../../store/asyncActions/addBoard';
-import { store } from '../../store/store';
 
 import css from './BoardContainer.module.css';
-import { useState } from 'react';
 
 export interface Props {
     filter: Filter[];   
@@ -21,81 +22,45 @@ export interface Filter {
 export const BoardContainer = ({ filter }: Props): JSX.Element => {
     const [open, setOpen] = useState<boolean>(false);
     const [title, setTitle] = useState<string>('');
-
+  
+    const dialogTitle: string = 'Введите название доски';
+    const buttonTitle: string = 'Добавить доску';
+    const selectId = null;
+  
     const handleClickOpen = () => {
-        setOpen(true);
+      setOpen(true);
     }
-
+  
     const handleClose = () => {
-        setOpen(false);
+      setOpen(false);
     }
+    
     return (
-        <Box className={css.area}>
-            <Button
-                variant='contained' 
-                size='small'
-                sx={{
-                  marginTop: '10px',
-                }} 
-                onClick={handleClickOpen}
-            >
-                <Add />
-                Добавить доску
-            </Button>
-            <Dialog
-                open={open}
-                onClose={handleClose}
-            >
-                <DialogTitle>Введите название доски</DialogTitle>
-                <DialogContent>
-                    <TextField 
-                        type='text'
-                        // id='outlined-basic' 
-                        label='Title' 
-                        variant='outlined' 
-                        size='small'
-                        defaultValue=''
-                        onChange={(e) => {
-                            setTitle(e.target.value);
-                        }}
-                        sx={{
-                            marginTop: '10px'
-                        }}
-                    />
-                </DialogContent>
-                <DialogActions
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column'
-                    }}
-                >
-                    <Button
-                        variant='contained' 
-                        size='small'
-                        sx={{
-                            marginBottom: '10px'
-                        }} 
-                        onClick={() => {
-                            store.dispatch(addBoard(title));
-                            handleClose()
-                        }}
-                        >
-                        <Add />
-                        Добавить доску
-                    </Button>
-                    <Button
-                        variant='contained' 
-                        size='small'
-                        onClick={() => {
-                            handleClose();
-                        }}
-                    >
-                        <Close />   
-                        Отмена
-                    </Button>
-                </DialogActions>
-            </Dialog>
-            <Board filter={ filter } />
-        </Box>
+      <Box className={css.area}>
+        <Button
+          variant='contained' 
+          size='small'
+          sx={{
+            marginTop: '10px',
+          }} 
+          onClick={() => {
+            handleClickOpen()
+            }}
+        >
+          <Add />
+          Добавить доску
+        </Button>
+        <ModalWondow 
+          open={open}
+          handleClose={() => handleClose()} 
+          dialogTitle={dialogTitle} 
+          setSelectTitle={setTitle} 
+          buttonTitle={buttonTitle} 
+          selectTitle={title} 
+          selectId={selectId} 
+          request={addBoard}
+        />
+        <Board filter={ filter } />
+      </Box>
     );
-}
+  }

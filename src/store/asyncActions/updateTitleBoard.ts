@@ -16,19 +16,28 @@ export const titleBoardUpdate = (selectId: number | null, selectTitle: string): 
   unknown,
   PayloadAction<Board>
 > => async (dispatch): Promise<void | unknown> => {
-  console.log(selectId, selectTitle);
-  
+  const user_id: number | string = JSON.parse(localStorage.getItem('user_id') || '')!;
+  const refreshToken: string = JSON.parse(localStorage.getItem('refresh_token') || '');
+
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${refreshToken}`,
+  };
+
   try {
     const response: Response = await fetch(`${updateTitleBoardUrl}`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ id: selectId, title: selectTitle })
+      headers,
+      body: JSON.stringify({ id: selectId, title: selectTitle, user_id })
     });
-    const data: Board = await response.json();
-    const { id, title } = data;
-    dispatch(updateTitleBoard({ id, title }));
+    const data = await response.json();
+    const { id, title } = data.board;
+    if (response.status === 204 || response.status === 200) {
+      dispatch(updateTitleBoard({ id, title }));
+      localStorage.setItem('refresh_token', JSON.stringify(data.token));
+    } else {
+      window.location.assign('/');
+    }
   } catch (e) {
     return console.log(e);
   }

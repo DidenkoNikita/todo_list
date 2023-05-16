@@ -1,30 +1,35 @@
 import { Login, PersonAdd } from "@mui/icons-material";
 
-import css from './RegistrationForm.module.css';
+import { Box, Button, TextField } from "@mui/material";
 
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+
 import { signupUrl } from "../../requestUrl/signupUrl";
-import { Box, Button, TextField } from "@mui/material";
+
+import css from './RegistrationForm.module.css';
 
 interface Data {
-  user_id: number;
+  id: number;
+  refreshToken: string;
 }
-
 
 export const RegistrationForm = () => {
   const initialValues = {
     login: '',
     password: '',
+    fullName: ''
   };
 
   const validationSchema = Yup.object({
     login: Yup.string().email('Invalid email address').required('Email is required'),
     password: Yup.string().required('Password is required'),
+    fullName: Yup.string().required('Full name is required')
   });
 
   const handleSubmit = async (values: typeof initialValues, actions: any): Promise<void> => {
     const login: string = values.login;
+    const fullName: string = values.fullName;
     const password: string = values.password;
     try {
       const response: Response = await fetch(`${signupUrl}`, {
@@ -32,12 +37,14 @@ export const RegistrationForm = () => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({login, password})
+        body: JSON.stringify({login, password, fullName})
       });
       const data = await response.json();
-      const {user_id}: Data = data;
-      if (response.status === 200) {
-        localStorage.setItem('user_id', JSON.stringify(user_id));
+      const {id, refreshToken}: Data = data;
+      
+      if (response.status === 200 || response.status === 204) {
+        localStorage.setItem('user_id', JSON.stringify(id));
+        localStorage.setItem('refresh_token', JSON.stringify(refreshToken));
         actions.setSubmitting(false);
         window.location.assign('/home/toDoList');
       }
@@ -47,12 +54,42 @@ export const RegistrationForm = () => {
     }
   };
 
+  const handleKeyDown = async (values: typeof initialValues, actions: any, event: any): Promise<void> => {
+    if (event.key === 'Enter') {
+      const login: string = values.login;
+      const fullName: string = values.fullName;
+      const password: string = values.password;
+      try {
+        const response: Response = await fetch(`${signupUrl}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({login, password, fullName})
+        });
+        const data = await response.json();
+        const {id, refreshToken}: Data = data;
+        
+        if (response.status === 200 || response.status === 204) {
+          localStorage.setItem('user_id', JSON.stringify(id));
+          localStorage.setItem('refresh_token', JSON.stringify(refreshToken));
+          actions.setSubmitting(false);
+          window.location.assign('/home/toDoList');
+        }
+      } catch (error) {
+        console.error('Произошла ошибка', error);
+        actions.setSubmitting(false);
+      }
+    }
+  };
+
   return (
     <Box>
       <Formik 
         initialValues={initialValues} 
         validationSchema={validationSchema} 
         onSubmit={handleSubmit}
+        onKeyDown={handleKeyDown}
       >
         <Form className={css.form}>
           <Box
@@ -83,6 +120,25 @@ export const RegistrationForm = () => {
           </Box>
           <Box>
             <Field 
+              type="text" 
+              name="fullName" 
+              id="fullName" 
+              placeholder="Full name" 
+              as={TextField} 
+              variant="outlined" 
+              size="small" 
+              sx={{
+                marginBottom: '10px'
+              }}
+            />
+            <ErrorMessage 
+              name="fullName" 
+              component="div" 
+              className={css.error} 
+            />
+          </Box>
+          <Box>
+            <Field 
               type="password" 
               name="password" 
               id="password" 
@@ -94,7 +150,7 @@ export const RegistrationForm = () => {
             <ErrorMessage 
               name="password" 
               component="div" 
-              className={css.error} 
+              className={css.error2} 
             />
           </Box>
           <Button 
