@@ -3,7 +3,8 @@ import { PayloadAction } from "@reduxjs/toolkit";
 
 import { RooteState } from "../store";
 import { removeTask } from "../counter/taskSlice";
-import { tasksUrl } from "../../requestUrl/tasksUrl";
+
+import { TasksUrl } from "../../requestUrl/tasksUrl";
 
 interface Task {
   id: number;
@@ -25,7 +26,7 @@ export const taskRemove = (id: number): ThunkAction<
   };
 
   try {
-    const response: Response = await fetch(`${tasksUrl}`, {
+    const response: Response = await fetch(`${TasksUrl}`, {
       method: 'DELETE',
       headers,
       body: JSON.stringify({id: Id, user_id})
@@ -38,7 +39,6 @@ export const taskRemove = (id: number): ThunkAction<
     }
 
     if (response.status === 201) {
-      console.log(data);
       const refreshToken = data;
       localStorage.setItem('refresh_token', JSON.stringify(refreshToken));
       alert('Попробуй ещё раз');

@@ -1,1 +1,1 @@
-export const boardsUrl: string = 'http://127.0.0.1:7000/boards';
+export const BoardsUrl: string = 'http://127.0.0.1:7000/boards';

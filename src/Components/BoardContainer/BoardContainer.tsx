@@ -21,46 +21,42 @@ export interface Filter {
 
 export const BoardContainer = ({ filter }: Props): JSX.Element => {
     const [open, setOpen] = useState<boolean>(false);
-    const [title, setTitle] = useState<string>('');
   
     const dialogTitle: string = 'Введите название доски';
     const buttonTitle: string = 'Добавить доску';
-    const selectId = null;
   
-    const handleClickOpen = () => {
-      setOpen(true);
+    const handleClickOpen = (): void => {
+        setOpen(true);
     }
   
-    const handleClose = () => {
-      setOpen(!open);
+    const handleClose = (): void => {
+        setOpen(!open);      
     }
     
     return (
-      <Box className={css.area}>
-        <Button
-          variant='contained' 
-          size='small'
-          sx={{
-            marginTop: '10px',
-          }} 
-          onClick={() => {
-            handleClickOpen()
-            }}
-        >
-          <Add />
-          Добавить доску
-        </Button>
-        <ModalWindow 
-          open={open}
-          handleClose={handleClose} 
-          dialogTitle={dialogTitle} 
-          setSelectTitle={setTitle} 
-          buttonTitle={buttonTitle} 
-          selectTitle={title} 
-          selectId={selectId} 
-          request={addBoard}
-        />
-        <Board filter={ filter } />
-      </Box>
+      <Box className={ css.area  }>
+            <Button
+                size='small'
+                sx={{
+                    marginTop: '10px',
+                }} 
+                onClick={() => {
+                    handleClickOpen();
+                }}
+                variant='contained' 
+                disabled={open}
+            >
+                <Add />
+                Добавить доску
+            </Button>
+            <ModalWindow
+                open={open}
+                handleClose={ handleClose } 
+                dialogTitle={ dialogTitle } 
+                buttonTitle={ buttonTitle } 
+                request={ addBoard }
+            />
+            <Board filter={ filter } />
+        </Box>
     );
   }

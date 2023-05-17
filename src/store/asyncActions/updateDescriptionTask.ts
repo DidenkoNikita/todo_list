@@ -3,7 +3,8 @@ import { PayloadAction } from "@reduxjs/toolkit";
 
 import { RooteState } from "../store";
 import { updateDescriptionTask } from "../counter/taskSlice";
-import { updateDescriptionTaskUrl } from "../../requestUrl/updateDescriptionTaskUrl";
+
+import { UpdateDescriptionTaskUrl } from "../../requestUrl/updateDescriptionTaskUrl";
 
 interface Task {
   id: number;
@@ -25,7 +26,7 @@ export const descriptionTaskUpdate = (selectId: number | null, description: stri
   };
 
   try {
-    const response: Response = await fetch(`${updateDescriptionTaskUrl}`, {
+    const response: Response = await fetch(`${UpdateDescriptionTaskUrl}`, {
       method: 'POST',
       headers,
       body: JSON.stringify({ id: selectId, title: description, user_id })
@@ -38,7 +39,6 @@ export const descriptionTaskUpdate = (selectId: number | null, description: stri
     } 
 
     if (response.status === 201) {
-      console.log(data);
       const refreshToken = data;
       localStorage.setItem('refresh_token', JSON.stringify(refreshToken));
       alert('Попробуй ещё раз');

@@ -3,7 +3,8 @@ import { PayloadAction } from "@reduxjs/toolkit";
 
 import { RooteState } from "../store";
 import { addingManyTask } from "../counter/taskSlice";
-import { readTasksUrl } from "../../requestUrl/readTasksUrl";
+
+import { ReadTasksUrl } from "../../requestUrl/readTasksUrl";
 
 interface CreateTask {
   id: number;
@@ -27,7 +28,7 @@ export const addAllTask = (): ThunkAction<
   };
 
   try {
-    const response: Response = await fetch(`${readTasksUrl}`, {
+    const response: Response = await fetch(`${ReadTasksUrl}`, {
       method: 'POST',
       headers,
       body: JSON.stringify({user_id})
@@ -39,7 +40,6 @@ export const addAllTask = (): ThunkAction<
     }
     
     if (response.status === 201) {
-      console.log(data);
       const refreshToken = data;
       localStorage.setItem('refresh_token', JSON.stringify(refreshToken));
       window.location.reload();

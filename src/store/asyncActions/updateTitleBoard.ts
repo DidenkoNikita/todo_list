@@ -3,7 +3,8 @@ import { PayloadAction } from "@reduxjs/toolkit";
 
 import { RooteState } from "../store";
 import { updateTitleBoard } from "../counter/boardSlice";
-import { updateTitleBoardUrl } from "../../requestUrl/updateTitleBoardUrl";
+
+import { UpdateTitleBoardUrl } from "../../requestUrl/updateTitleBoardUrl";
 
 interface Board {
   id: number;
@@ -25,7 +26,7 @@ export const titleBoardUpdate = (selectId: number | null, selectTitle: string): 
   };
 
   try {
-    const response: Response = await fetch(`${updateTitleBoardUrl}`, {
+    const response: Response = await fetch(`${UpdateTitleBoardUrl}`, {
       method: 'POST',
       headers,
       body: JSON.stringify({ id: selectId, title: selectTitle, user_id })
@@ -38,7 +39,6 @@ export const titleBoardUpdate = (selectId: number | null, selectTitle: string): 
     } 
 
     if (response.status === 201) {
-      console.log(data);
       const refreshToken = data;
       localStorage.setItem('refresh_token', JSON.stringify(refreshToken));
       alert('Попробуй ещё раз');

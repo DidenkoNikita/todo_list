@@ -8,7 +8,7 @@ import { AboutUs } from "../AboutUs/AboutUs";
 import { OurProjects } from "../OurProjects/OurProjects";
 import { TodoList } from "../TodoList/TodoList";
 
-import { userUrl } from "../../requestUrl/userUrl";
+import { UserUrl } from "../../requestUrl/userUrl";
 
 export const Profile = (): JSX.Element => {
   const [name, setName] = useState<string>('');
@@ -23,7 +23,7 @@ export const Profile = (): JSX.Element => {
     };
 
     try {
-      const response: Response = await fetch(`${userUrl}`, {
+      const response: Response = await fetch(`${UserUrl}`, {
         method: 'POST',
         headers,
         body: JSON.stringify({ user_id })
@@ -36,13 +36,12 @@ export const Profile = (): JSX.Element => {
       }
 
       if (response.status === 201) {
-        console.log(data);
         const refreshToken = data;
         localStorage.setItem('refresh_token', JSON.stringify(refreshToken));
         window.location.reload();
       }
     } catch (err) {
-      console.log(err);
+      return console.log(err);
     }
   }
 

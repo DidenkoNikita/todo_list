@@ -5,7 +5,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 import * as Yup from 'yup';
 
-import { loginUrl } from "../../requestUrl/loginUrl";
+import { LoginUrl } from "../../requestUrl/loginUrl";
 
 import css from './LoginForm.module.css';
 
@@ -29,7 +29,7 @@ export const LoginForm = (): JSX.Element => {
     const login: string = values.login;
     const password: string = values.password;
     try {
-      const response: Response = await fetch(`${loginUrl}`, {
+      const response: Response = await fetch(`${LoginUrl}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -37,7 +37,6 @@ export const LoginForm = (): JSX.Element => {
         body: JSON.stringify({login, password})
       });
       const data = await response.json();
-      console.log(data);
       
       const {id, refreshToken}: Data = data;      
       if (response.status === 200) {
@@ -57,7 +56,7 @@ export const LoginForm = (): JSX.Element => {
       const login: string = values.login;
       const password: string = values.password;
       try {
-        const response: Response = await fetch(`${loginUrl}`, {
+        const response: Response = await fetch(`${LoginUrl}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -65,7 +64,6 @@ export const LoginForm = (): JSX.Element => {
           body: JSON.stringify({login, password})
         });
         const data = await response.json();
-        console.log(data);
         
         const {id, refreshToken}: Data = data;      
         if (response.status === 200) {

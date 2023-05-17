@@ -3,7 +3,6 @@ import React from 'react';
 import { Button, TextField } from '@mui/material';
 import { Search } from '@mui/icons-material';
 
-
 import css from './FilterBoard.module.css';
 
 interface FilterBoardProps {
@@ -23,7 +22,7 @@ export const FilterBoard: React.FC<FilterBoardProps> = ({ search, setSearch, han
         type='search' 
         name='search' 
         id='filled-basic' 
-        label='Поиск досок' 
+        label='Поиск досок'
         variant='outlined' 
         size='small'
         onChange = {(event) => {

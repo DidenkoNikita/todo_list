@@ -16,7 +16,6 @@ code {
 
 .region-light {
   background-color: #f0f0f0;
-  /* height: 100%; */
   min-height: 100vh;
   padding-top: 10px;
   display: flex;
@@ -25,7 +24,6 @@ code {
 
 .region-dark {
   background-color: #303030;
-  /* height: 100%; */
   min-height: 100vh;
   padding-top: 10px;
   display: flex;

@@ -1,17 +1,17 @@
-import { FC, useState } from 'react'
+import { FC, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { Box, ButtonBase, Checkbox, Paper } from '@mui/material';
 import { Clear, Edit } from '@mui/icons-material';
-
 
 import { completTask } from '../../store/asyncActions/completTask';
 import { taskRemove } from '../../store/asyncActions/removeTask';
 import { store } from '../../store/store';
 import { descriptionTaskUpdate } from '../../store/asyncActions/updateDescriptionTask';
 
-import css from './Task.module.css';
 import { ModalWindow } from '../ModalWindow/ModalWindow';
+
+import css from './Task.module.css';
 
 interface Props {
   idBoard: number;
@@ -32,7 +32,6 @@ interface ITasks {
 export const Task: FC<Props> = ({ idBoard }): JSX.Element => {
   const [open, setOpen] = useState<boolean>(false);
   const [selectId, setSelectId] = useState<number | null>(null);
-  const [description, setDescription] = useState<string>('');
 
   const dialogTitle: string = 'Введите новое описание';
   const buttonTitle: string = 'Изменить';
@@ -42,12 +41,12 @@ export const Task: FC<Props> = ({ idBoard }): JSX.Element => {
 
   );
 
-  const handleClickOpen = (id: number) => {
+  const handleClickOpen = (id: number): void => {
     setSelectId(id);
-    setOpen(true);
+    setOpen(true);    
   }
 
-  const handleCloseTask = () => {
+  const handleCloseTask = (): void => {
     setOpen(!open);
   }
 
@@ -64,7 +63,7 @@ export const Task: FC<Props> = ({ idBoard }): JSX.Element => {
               elevation={ 2 }
             >
               <Checkbox
-                checked={completed}
+                checked={ completed }
                 onClick={() => {
                   store.dispatch(completTask(id, completed));
                 }}
@@ -101,16 +100,6 @@ export const Task: FC<Props> = ({ idBoard }): JSX.Element => {
                       }}
                   />   
                 </ButtonBase>
-                <ModalWindow 
-                  open={open} 
-                  handleClose={handleCloseTask} 
-                  dialogTitle={dialogTitle} 
-                  setSelectTitle={setDescription} 
-                  buttonTitle={buttonTitle} 
-                  selectTitle={description} 
-                  selectId={selectId} 
-                  request={descriptionTaskUpdate}
-                />
                 <ButtonBase
                   className={ css.delete }
                   onClick={() => {
@@ -122,6 +111,14 @@ export const Task: FC<Props> = ({ idBoard }): JSX.Element => {
             </Paper>
           );
         })}
+        <ModalWindow 
+          open={ open }  
+          handleClose={ handleCloseTask } 
+          dialogTitle={ dialogTitle } 
+          buttonTitle={ buttonTitle } 
+          selectId={ selectId } 
+          request={ descriptionTaskUpdate }
+        />
     </Box>
   );
 };

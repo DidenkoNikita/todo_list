@@ -5,7 +5,7 @@ import { Box, Button, TextField } from "@mui/material";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
-import { signupUrl } from "../../requestUrl/signupUrl";
+import { SignupUrl } from "../../requestUrl/signupUrl";
 
 import css from './RegistrationForm.module.css';
 
@@ -32,7 +32,7 @@ export const RegistrationForm = () => {
     const fullName: string = values.fullName;
     const password: string = values.password;
     try {
-      const response: Response = await fetch(`${signupUrl}`, {
+      const response: Response = await fetch(`${SignupUrl}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -60,7 +60,7 @@ export const RegistrationForm = () => {
       const fullName: string = values.fullName;
       const password: string = values.password;
       try {
-        const response: Response = await fetch(`${signupUrl}`, {
+        const response: Response = await fetch(`${SignupUrl}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

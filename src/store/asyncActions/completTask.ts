@@ -3,7 +3,8 @@ import { PayloadAction } from "@reduxjs/toolkit";
 
 import { RooteState } from "../store";
 import { taskComplete } from "../counter/taskSlice";
-import { taskCompletedUrl } from "../../requestUrl/taskCompletedUrl";
+
+import { TaskCompletedUrl } from "../../requestUrl/taskCompletedUrl";
 
 interface Complet {
   id: number;
@@ -27,7 +28,7 @@ export const completTask = (id: number, completed: boolean): ThunkAction<
   };
 
   try {
-    const response: Response = await fetch(`${taskCompletedUrl}`, {
+    const response: Response = await fetch(`${TaskCompletedUrl}`, {
       method: 'POST',
       headers,
       body: JSON.stringify({ id: ID, completed: Completed, user_id})
@@ -40,7 +41,6 @@ export const completTask = (id: number, completed: boolean): ThunkAction<
     }
 
     if (response.status === 201) {
-      console.log(data);
       const refreshToken = data;
       localStorage.setItem('refresh_token', JSON.stringify(refreshToken));
       alert('Попробуй ещё раз');

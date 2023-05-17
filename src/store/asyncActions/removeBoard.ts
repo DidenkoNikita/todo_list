@@ -3,7 +3,8 @@ import { PayloadAction } from "@reduxjs/toolkit";
 
 import { RooteState } from "../store";
 import { removeBoard } from "../counter/boardSlice";
-import { boardsUrl } from "../../requestUrl/boardsUrl";
+
+import { BoardsUrl } from "../../requestUrl/boardsUrl";
 
 interface Board {
   id: number;
@@ -25,7 +26,7 @@ export const boardRemove = (id: number): ThunkAction<
   };
 
   try {
-    const response: Response = await fetch(`${boardsUrl}`, {
+    const response: Response = await fetch(`${BoardsUrl}`, {
       method: 'DELETE',
       headers,
       body: JSON.stringify({id: Id, user_id})
@@ -38,7 +39,6 @@ export const boardRemove = (id: number): ThunkAction<
     }
 
     if (response.status === 201) {
-      console.log(data);
       const refreshToken = data;
       localStorage.setItem('refresh_token', JSON.stringify(refreshToken));
       alert('Попробуй ещё раз');

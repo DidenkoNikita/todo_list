@@ -21,11 +21,6 @@ export const boardSlice = createSlice({
           state.push(board);
         }
       });
-      // console.log(payload);
-      
-      // payload.sort((a, b) => a.id - b.id);
-      // console.log(payload);
-      
     },
     removeBoard: (state, action: PayloadAction<{ id: number }>): Board[] => {
       const { payload } = action;
@@ -35,11 +30,7 @@ export const boardSlice = createSlice({
     updateTitleBoard: (state, action: PayloadAction<{ id: number, title: string }>): Board[] => {
       const { payload } = action;
       state = state.map((board) => (board.id === payload.id ? { ...board, title: payload.title } : board));
-      console.log(state);
-      
       state.sort((a, b) => a.id - b.id);
-      console.log(state);
-      
       return state;
     },
   },

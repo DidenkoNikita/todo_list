@@ -1,45 +1,51 @@
 import { Close, Edit } from "@mui/icons-material";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
+
 import { store } from "../../store/store";
+import { useState } from "react";
 
 interface Modal {
   open: boolean;
-  handleClose: any;
+  handleClose: () => void;
   dialogTitle: string;
-  setSelectTitle: any;
   buttonTitle: string;
-  selectTitle: string; 
-  selectId: number | null;
+  selectId?: number | null;
   request: any;
 }
 
-export const ModalWindow = ({open, dialogTitle, setSelectTitle, handleClose, buttonTitle, selectTitle, selectId, request}: Modal): JSX.Element => {
-  const handleKeyDown = (event: any) => {
+export const ModalWindow = ({ open, dialogTitle, handleClose, buttonTitle, selectId, request }: Modal): JSX.Element => {
+  const [inputValue, setInputValue] = useState<string>('');  
+  
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>): void => {
     if(event.key === 'Enter') {
-      store.dispatch(request(selectId, selectTitle));
-      handleClose();
-      console.log('complet');      
+      event.preventDefault();
+      if (inputValue.trim() !== '') { 
+        store.dispatch(request(selectId, inputValue));
+        setInputValue('');
+        handleClose();
+      }
     }
-  }
+  }  
 
   return (
     <Dialog
-      open={open}
-      onClose={handleClose}
-      >
-      <DialogTitle>{dialogTitle}</DialogTitle>
-      <DialogContent 
-      >
+      open={ open }
+      onClose={ handleClose }
+    >
+      <DialogTitle>{ dialogTitle }</DialogTitle>
+      <DialogContent>
         <TextField 
+          name='modal-input'
           type='text'
           id='outlined-basic' 
           label='Title' 
           variant='outlined' 
+          autoFocus={ true }
           size='small'
-          defaultValue={null}
-          onKeyDown={handleKeyDown}
+          onKeyDown={ handleKeyDown }
+          defaultValue=''
           onChange={(e) => {
-              setSelectTitle(e.target.value);
+              setInputValue(e.target.value);
           }}
           sx={{
               marginTop: '10px'
@@ -60,18 +66,18 @@ export const ModalWindow = ({open, dialogTitle, setSelectTitle, handleClose, but
             marginBottom: '10px'
           }} 
           onClick={() => {
-            store.dispatch(request(selectId, selectTitle));
-            handleClose();
+            if (inputValue.trim() !== '') {               
+              store.dispatch(request(selectId, inputValue));
+              handleClose();
+            }
           }}
         >
           <Edit />
-          {buttonTitle}
+          { buttonTitle }
         </Button>
         <Button
           variant='contained' 
           size='small'
-          sx={{
-          }} 
           onClick={() => {
             handleClose();
           }}

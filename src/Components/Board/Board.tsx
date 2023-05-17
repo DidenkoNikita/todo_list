@@ -5,6 +5,7 @@ import { Add, Clear, Edit } from '@mui/icons-material';
 
 import { Task } from '../Task/Task';
 import { Props } from '../BoardContainer/BoardContainer';
+import { ModalWindow } from '../ModalWindow/ModalWindow';
 
 import { addTask } from '../../store/asyncActions/addTask';
 import { addAllBoard } from '../../store/asyncActions/addAllBoard';
@@ -14,7 +15,6 @@ import { store } from '../../store/store';
 import { titleBoardUpdate } from '../../store/asyncActions/updateTitleBoard';
 
 import css from './Board.module.css';
-import { ModalWindow } from '../ModalWindow/ModalWindow';
 
 interface Data {
     id: number;
@@ -24,8 +24,6 @@ interface Data {
 export const Board = ({ filter }: Props): JSX.Element | null => {    
     const [open, setOpen] = useState<boolean>(false);
     const [openBoard, setOpenBoard] = useState<boolean>(false);
-    const [description, setDescription] = useState<string>('');
-    const [selectTitle, setSelectTitle] = useState<string>('');
     const [selectId, setSelectId] = useState<number | null>(null);
     
     const dialogTitleEditBoard: string = 'Введите новый заголовок';
@@ -42,21 +40,21 @@ export const Board = ({ filter }: Props): JSX.Element | null => {
         return null;
     }
 
-    const handleClickOpen = (id: number) => {
+    const handleClickOpen = (id: number): void => {
         setSelectId(id)
         setOpen(true);
     }
 
-    const handleClose = () => {
+    const handleClose = (): void => {
         setOpen(false);
     }
 
-    const handleClickOpenBoard = (id: number) => {
+    const handleClickOpenBoard = (id: number): void => {
         setSelectId(id)
         setOpenBoard(true);
     }
 
-    const handleCloseBoard = () => {
+    const handleCloseBoard = (): void => {
         setOpenBoard(false);
     }
 
@@ -123,16 +121,6 @@ export const Board = ({ filter }: Props): JSX.Element | null => {
                                             }}
                                         />   
                                     </ButtonBase>
-                                    <ModalWindow
-                                        open={openBoard} 
-                                        handleClose={handleCloseBoard} 
-                                        dialogTitle={dialogTitleEditBoard} 
-                                        setSelectTitle={setSelectTitle} 
-                                        buttonTitle={buttonTitleEditBoard} 
-                                        selectTitle={selectTitle} 
-                                        selectId={selectId} 
-                                        request={titleBoardUpdate}
-                                    />
                                     <ButtonBase
                                         onClick={() => {
                                             store.dispatch(boardRemove(id))
@@ -151,7 +139,7 @@ export const Board = ({ filter }: Props): JSX.Element | null => {
                                                 alignSelf: 'center',
                                                 cursor: 'pointer'
                                             }}
-                                            />
+                                        />
                                     </ButtonBase>
                                 </Box>
                                 <Task idBoard={ id } />
@@ -161,38 +149,45 @@ export const Board = ({ filter }: Props): JSX.Element | null => {
                                     }}
                                     >
                                     <Button 
-                                        variant='contained' 
                                         size="small"
+                                        variant='contained' 
                                         onClick={() => {
                                             handleClickOpen(id);
                                         }}
+                                        disabled={open}
                                         sx={{
                                             marginBottom: '10px',
                                             marginRight: '10px',
                                             maxWidth: '150px',
                                             alignSelf: 'center',
-                                            paddingLeft: '5px'
+                                            paddingLeft: '5px',
                                         }}
                                         >
                                         <Add />
                                         Добавить задачу
                                     </Button>
                                 </Box>
-                                <ModalWindow
-                                    open={open} 
-                                    handleClose={handleClose} 
-                                    dialogTitle={dialogTitleTask} 
-                                    setSelectTitle={setDescription} 
-                                    buttonTitle={buttonTitleTask} 
-                                    selectTitle={description} 
-                                    selectId={selectId} 
-                                    request={addTask}
-                                />
                             </Paper>
                         </Grid>
                     )
                 })}
             </Grid>
+            <ModalWindow
+                open={ openBoard } 
+                handleClose={ handleCloseBoard } 
+                dialogTitle={ dialogTitleEditBoard } 
+                buttonTitle={ buttonTitleEditBoard } 
+                selectId={ selectId } 
+                request={ titleBoardUpdate }
+            />
+            <ModalWindow
+                open={ open } 
+                handleClose={ handleClose } 
+                dialogTitle={ dialogTitleTask } 
+                buttonTitle={ buttonTitleTask } 
+                selectId={ selectId } 
+                request={ addTask }
+            />
         </Container>
     );
 };

@@ -3,7 +3,8 @@ import { PayloadAction } from "@reduxjs/toolkit";
 
 import { RooteState } from "../store";
 import { addingABoard } from "../counter/boardSlice";
-import { boardsUrl } from "../../requestUrl/boardsUrl";
+
+import { BoardsUrl } from "../../requestUrl/boardsUrl";
 
 interface CreateBoard {
   id: number;
@@ -25,7 +26,7 @@ export const addBoard = (id : null, title: string): ThunkAction<
   };
 
   try {
-    const response: Response = await fetch(`${boardsUrl}`, {
+    const response: Response = await fetch(`${BoardsUrl}`, {
       method: 'POST',
       headers,
       body: JSON.stringify({title, user_id})
@@ -37,7 +38,6 @@ export const addBoard = (id : null, title: string): ThunkAction<
     } 
 
     if (response.status === 201) {
-      console.log(data);
       const refreshToken = data;
       localStorage.setItem('refresh_token', JSON.stringify(refreshToken));
       alert('Попробуй ещё раз');

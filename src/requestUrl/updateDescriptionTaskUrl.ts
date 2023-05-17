@@ -1,1 +1,1 @@
-export const updateDescriptionTaskUrl: string = 'http://127.0.0.1:7000/update_tasks';
+export const UpdateDescriptionTaskUrl: string = 'http://127.0.0.1:7000/update_tasks';
